@@ -28,10 +28,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#FFF3FA"
+            android:background="#FFFFFF"
             android:gravity="center"
             android:text="Menü İsmi"
-            android:textColor="#FF3D36"
+            android:textColor="#84B150"
             android:textSize="16sp" />
 
 

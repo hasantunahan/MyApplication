@@ -27,10 +27,10 @@
            android:layout_alignParentBottom="true">
 
            <TextView
-               android:background="#FFF3FA"
+               android:background="#fff"
                android:id="@+id/food_name"
                android:text="Makaron İsmi"
-               android:textColor="#FF3D36"
+               android:textColor="#84B150"
                android:padding="5dp"
                android:fontFamily="@font/kim"
                android:textSize="16sp"
@@ -47,7 +47,7 @@
                android:layout_width="0dp"
                android:layout_height="match_parent"
                android:layout_weight="1"
-               android:background="#FFF3FA"
+               android:background="#fff"
                android:tint="#FF3D36"
                app:srcCompat="@drawable/ic_favorite_border_black_24dp" />
 
