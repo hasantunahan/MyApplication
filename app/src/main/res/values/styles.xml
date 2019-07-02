@@ -30,4 +30,10 @@
         <item name="android:fontFamily">@font/playball</item>
     </style>
 
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:fontFamily">@font/kim</item>
+    </style>
+
+
+
 </resources>

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     app:cardElevation="4dp"
-    android:layout_marginBottom="8dp"
+    android:layout_margin="15dp"
     >
 
     <RelativeLayout
@@ -15,21 +15,24 @@
 
         <ImageView
             android:id="@+id/menu_image"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds ="true"
             android:layout_width="match_parent"
+            android:elevation="7dp"
             android:layout_height="170dp" />
 
         <TextView
-            android:background="@color/colorPrimary"
-
             android:id="@+id/menu_name"
-            android:text="Menü İsmi"
-            android:textColor="#ED1968"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"
+            android:padding="5dp"
+            android:fontFamily="@font/kim"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#FFF3FA"
+            android:gravity="center"
+            android:text="Menü İsmi"
+            android:textColor="#FF3D36"
+            android:textSize="16sp" />
 
 
 

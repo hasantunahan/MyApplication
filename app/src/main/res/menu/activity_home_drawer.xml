@@ -8,7 +8,9 @@
             android:id="@+id/nav_menu"
             android:icon="@drawable/ic_maca"
             android:iconTint="@android:color/white"
-            android:title="MENÜ" />
+            android:title="Menü"
+            android:fontFamily="@font/kim"
+            />
 
         <item
             android:id="@+id/nav_cart"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     app:cardElevation="4dp"
-    android:layout_marginBottom="8dp"
+    android:layout_margin="15dp"
     >
 
     <RelativeLayout
@@ -14,7 +14,8 @@
 
         <ImageView
             android:id="@+id/food_image"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds ="true"
             android:layout_width="match_parent"
             android:layout_height="170dp" />
 
@@ -26,25 +27,29 @@
            android:layout_alignParentBottom="true">
 
            <TextView
-               android:background="@color/colorPrimary"
+               android:background="#FFF3FA"
                android:id="@+id/food_name"
                android:text="Makaron İsmi"
-               android:textColor="#ED1968"
-               android:textSize="20sp"
+               android:textColor="#FF3D36"
+               android:padding="5dp"
+               android:fontFamily="@font/kim"
+               android:textSize="16sp"
                android:gravity="center"
                android:layout_weight="9"
                android:layout_width="0dp"
-               android:layout_height="wrap_content" />
+               android:layout_height="wrap_content"
+
+               />
 
            <ImageView
-               android:background="@color/colorPrimary"
-
                android:id="@+id/fav"
-               app:srcCompat="@drawable/ic_favorite_border_black_24dp"
-               android:tint="@color/white"
-               android:layout_weight="1"
+               android:padding="3dp"
                android:layout_width="0dp"
-               android:layout_height="wrap_content" />
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:background="#FFF3FA"
+               android:tint="#FF3D36"
+               app:srcCompat="@drawable/ic_favorite_border_black_24dp" />
 
        </LinearLayout>
 
