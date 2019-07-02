@@ -125,7 +125,7 @@ public class Home extends AppCompatActivity
 
          adapter=new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class,R.layout.menu_item,MenuViewHolder.class,category) {
             @Override
-            protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
+            protected void populateViewHolder(MenuViewHolder viewHolder, final Category model, int position) {
                 viewHolder.txtMenuName.setText(model.getName());
                 Picasso.with(getBaseContext()).load(model.getImage())
                          .into(viewHolder.imageView);
@@ -138,6 +138,7 @@ public class Home extends AppCompatActivity
                         Intent foodList=new Intent(Home.this,FoodList.class);
                         //
                         foodList.putExtra("CategoryId",adapter.getRef(position).getKey());
+                        foodList.putExtra("kategori_ismi",model.getName());
                         startActivity(foodList);
 
                     }

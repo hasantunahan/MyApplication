@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andremion.counterfab.CounterFab;
@@ -38,7 +39,8 @@ public class FoodList extends AppCompatActivity {
     CounterFab fab;
     FirebaseDatabase database;
     DatabaseReference foodList;
-
+    private Intent intent;
+    private TextView urunlistesi_ismi;
     String categoryId="";
 
     FirebaseRecyclerAdapter<Food, FoodViewHolder> adapter;
@@ -56,6 +58,11 @@ public class FoodList extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
+        //categori ismi icin
+        urunlistesi_ismi=findViewById(R.id.urunlistesi);
+        intent=getIntent();
+        String kategori_ismi=intent.getStringExtra("kategori_ismi");
+        urunlistesi_ismi.setText(kategori_ismi);
 
         //Fİrebase
         database = FirebaseDatabase.getInstance();
