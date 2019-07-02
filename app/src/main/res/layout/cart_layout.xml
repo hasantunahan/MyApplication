@@ -80,7 +80,7 @@
             android:layout_width="100dp"
             android:layout_height="38dp"
             android:layout_margin="10dp"
-            app:backGroundColor="@color/colorPrimary"
+            app:backGroundColor="#84B150"
             app:finalNumber="20"
             app:initialNumber="1"
             app:textSize="7sp"
