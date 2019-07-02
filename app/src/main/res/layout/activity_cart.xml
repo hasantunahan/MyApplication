@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:padding="16dp"
+    android:background="@drawable/turuncu"
+    android:layout_height="match_parent"
+    tools:context=".Cart">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listCart"
+        android:background="@android:color/transparent"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <android.support.v7.widget.CardView
+        android:layout_alignParentBottom="true"
+        app:cardBackgroundColor="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_margin="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Toplam:"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/total"
+                    android:text="$10,000"
+                    android:textSize="24sp"
+                    android:textColor="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnPlaceOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="45dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginEnd="45dp"
+                android:layout_marginRight="45dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/overlayBackground"
+                android:text="Sipariş adresi"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+
+
+                app:met_baseColor="@android:color/white"
+                app:met_floatingLabel="highlight"
+                app:met_maxCharacters="11"
+                app:met_primaryColor="@android:color/white"
+                app:met_singleLineEllipsis="true" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

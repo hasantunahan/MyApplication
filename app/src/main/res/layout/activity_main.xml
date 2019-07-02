@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/yeni"
+    tools:context=".MainActivity">
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtSlogan"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:text="@string/slogan"
+            android:textColor="@android:color/white"
+            android:textSize="50dp"
+            tools:fontFamily="@font/playball" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="47dp"
+        android:layout_marginLeft="47dp"
+        android:layout_marginBottom="43dp"
+        android:background="@color/common_google_signin_btn_text_light_focused"
+        android:text="Kayıt Ol"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        app:met_baseColor="@android:color/white"
+        app:met_floatingLabel="highlight"
+        app:met_maxCharacters="11"
+        app:met_primaryColor="@android:color/white"
+        app:met_singleLineEllipsis="true" />
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="240dp"
+        android:layout_marginLeft="240dp"
+        android:layout_marginBottom="43dp"
+        android:background="@color/common_google_signin_btn_text_light_focused"
+        android:text="Giriş Yap"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        app:met_baseColor="@android:color/white"
+        app:met_floatingLabel="highlight"
+        app:met_maxCharacters="11"
+        app:met_primaryColor="@android:color/white"
+        app:met_singleLineEllipsis="true" />
+
+
+</RelativeLayout>

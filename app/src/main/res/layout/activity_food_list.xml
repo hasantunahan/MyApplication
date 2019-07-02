@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FoodList">
+
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/searchBar"
+        android:layout_alignParentTop="true"
+        app:mt_speechMode="false"
+        android:layout_marginTop="12dp"
+        android:lineSpacingMultiplier="1.5"
+        android:padding="12dp"
+        app:mt_hint="Buradan arayabilirsiniz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+
+
+    <android.support.v7.widget.RecyclerView
+
+
+
+        android:layout_below="@id/searchBar"
+        android:id="@+id/recycler_food"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    <com.andremion.counterfab.CounterFab
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="3dp"
+        android:backgroundTint="@android:color/white"
+        app:srcCompat="@drawable/ic_shopping_cart_black_24dp" />
+
+
+</RelativeLayout>
