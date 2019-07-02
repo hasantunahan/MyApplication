@@ -14,26 +14,26 @@
         android:layout_alignParentTop="true"
         app:mt_speechMode="false"
         android:lineSpacingMultiplier="1.5"
-        android:layout_margin="7dp"
+        android:layout_margin="10dp"
         android:padding="9dp"
         app:mt_hint="Buradan arayabilirsiniz"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/radius_cerceve"
+
         />
 
     <TextView
         android:id="@+id/urunlistesi"
-        android:layout_below="@+id/searchBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ÜRÜNLER"
-        android:textSize="16sp"
+        android:layout_below="@+id/searchBar"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/kim"
         android:gravity="center"
         android:padding="4dp"
+        android:text="ÜRÜNLER"
         android:textColor="#000000"
-        />
+        android:textSize="16sp" />
 
 
     <android.support.v7.widget.RecyclerView
