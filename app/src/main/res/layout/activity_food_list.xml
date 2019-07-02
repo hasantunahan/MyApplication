@@ -23,9 +23,15 @@
         />
 
     <TextView
+        android:id="@+id/urunlistesi"
+        android:layout_below="@+id/searchBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="14sp"
+        android:layout_height="wrap_content"
+        android:text="ÜRÜNLER"
+        android:textSize="16sp"
+        android:fontFamily="@font/kim"
+        android:gravity="center"
+        android:padding="4dp"
         android:textColor="#000000"
         />
 
@@ -34,7 +40,7 @@
         android:id="@+id/recycler_food"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/searchBar"
+        android:layout_below="@+id/urunlistesi"
         android:layout_marginTop="0dp"
         android:scrollbars="vertical" />
 
