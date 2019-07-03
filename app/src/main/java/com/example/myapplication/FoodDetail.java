@@ -134,6 +134,7 @@ public class FoodDetail extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Home.class);
                 startActivity(intent);
+                epicdialog.dismiss();
             }
         });
 
@@ -142,6 +143,7 @@ public class FoodDetail extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Cart.class);
                 startActivity(intent);
+                epicdialog.dismiss();
             }
         });
 
