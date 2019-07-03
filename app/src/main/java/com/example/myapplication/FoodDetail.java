@@ -1,11 +1,16 @@
 package com.example.myapplication;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -25,17 +30,20 @@ import com.squareup.picasso.Picasso;
 
 public class FoodDetail extends AppCompatActivity {
 
+    private Dialog epicdialog;
+    private Button alisveriseDevam;
+    private Button sepeteGitDevam;
+    private ImageView alertDismissButton;
+
     TextView food_name,food_price,food_description,mRatingScale;
     ImageView food_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
     FloatingActionButton btnCart,btnRating;
     ElegantNumberButton numberButton;
     RatingBar ratingBar;
-
     String foodId;
     FirebaseDatabase database;
     DatabaseReference food;
-
     Food currentFood;
 
 
@@ -49,6 +57,7 @@ public class FoodDetail extends AppCompatActivity {
         //.Firebase
         database =FirebaseDatabase.getInstance();
         food=database.getReference("Food");
+        epicdialog=new Dialog(FoodDetail.this,R.style.AppTheme_NoActionBar);
 
         numberButton = (ElegantNumberButton) findViewById(R.id.number_button);
         btnCart= (FloatingActionButton) findViewById(R.id.btnCart);
@@ -71,6 +80,10 @@ public class FoodDetail extends AppCompatActivity {
                 ));
 
                 Toast.makeText(FoodDetail.this,"Sepete eklendi",Toast.LENGTH_SHORT).show();
+
+                sepetDialog();
+
+
             }
         });
 
@@ -99,6 +112,42 @@ public class FoodDetail extends AppCompatActivity {
 
     }
 
+    private void sepetDialog(){
+        epicdialog.setContentView(R.layout.shopping_finish_or_add_cart);
+        epicdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        epicdialog.show();
+        alisveriseDevam=epicdialog.findViewById(R.id.alisveriseDevamButton);
+        sepeteGitDevam=epicdialog.findViewById(R.id.sepeteGitButton);
+        alertDismissButton=epicdialog.findViewById(R.id.alertDismissButton);
+
+
+        alertDismissButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                epicdialog.dismiss();
+            }
+        });
+
+
+        alisveriseDevam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Home.class);
+                startActivity(intent);
+            }
+        });
+
+        sepeteGitDevam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Cart.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+    }
 
 
     private void getDetailFood(String foodId) {
