@@ -11,10 +11,10 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listCart"
-        android:background="@android:color/transparent"
-
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent" />
 
     <android.support.v7.widget.CardView
         android:layout_alignParentBottom="true"
@@ -66,15 +66,15 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="45dp"
                 android:layout_marginLeft="45dp"
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="47dp"
                 android:layout_marginEnd="44dp"
                 android:layout_marginRight="44dp"
                 android:layout_marginBottom="10dp"
                 android:background="@color/overlayBackground"
-
+                 android:textSize="16sp"
 
                 android:fontFamily="@font/kim"
-                android:text="Sipariş adresi"
+                android:text="Sipariş Ver"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white"
                 app:met_baseColor="@android:color/white"
