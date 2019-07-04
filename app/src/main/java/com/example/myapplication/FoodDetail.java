@@ -4,11 +4,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +16,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
@@ -26,7 +27,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 public class FoodDetail extends AppCompatActivity {
 
@@ -159,7 +159,12 @@ public class FoodDetail extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
               currentFood=dataSnapshot.getValue(Food.class);
 
-                Picasso.with(getBaseContext()).load(currentFood.getImage()).into(food_image);
+
+                /*    Picasso.with(getBaseContext()).load(currentFood.getImage()).into(food_image);*/
+
+                //Picasso.get().load(currentFood.getImage()).resize(100,100).centerCrop().into(food_image);
+                Glide.with(getApplicationContext()).load(currentFood.getImage()).into(food_image);
+
 
                 collapsingToolbarLayout.setTitle(currentFood.getName());
 

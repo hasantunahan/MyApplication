@@ -34,7 +34,7 @@
         <activity android:name=".Cart" />
         <activity android:name=".FoodDetail" />
         <activity android:name=".FoodList" />
-        <activity android:name=".food" />
+        <!--<activity android:name=".food" />-->
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"

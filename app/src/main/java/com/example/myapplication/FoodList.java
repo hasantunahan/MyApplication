@@ -1,16 +1,14 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,12 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.security.AccessController.getContext;
 
 public class FoodList extends AppCompatActivity {
 
@@ -167,8 +162,11 @@ public class FoodList extends AppCompatActivity {
             @Override
             protected void populateViewHolder(FoodViewHolder viewHolder, Food model, int position) {
                 viewHolder.food_name.setText(model.getName());
-                Picasso.with(getBaseContext()).load(model.getImage())
-                        .into(viewHolder.food_image);
+              /*  Picasso.with(getBaseContext()).load(model.getImage())
+                        .into(viewHolder.food_image);*/
+
+             //   Picasso.get().load(model.getImage()).resize(100,100).centerCrop().into(viewHolder.food_image);
+                     Glide.with(getApplicationContext()).load(model.getImage()).into(viewHolder.food_image);
 
                 final Food local=model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
@@ -219,7 +217,10 @@ public class FoodList extends AppCompatActivity {
                /* Picasso.with(getBaseContext()).load(model.getImage())
                         .into(viewHolder.food_image);*/
 
-                Glide.with(getApplicationContext()).load(model.getImage()).into(viewHolder.food_image);
+               Glide.with(FoodList.this).load(model.getImage()).into(viewHolder.food_image);
+
+               // Picasso.get().load(model.getImage()).resize(100,100).centerCrop().into(viewHolder.food_image);
+
 
 
                 if(localDB.isFavorite(adapter.getRef(position).getKey()))

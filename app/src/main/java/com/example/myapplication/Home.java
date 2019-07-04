@@ -2,25 +2,21 @@ package com.example.myapplication;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +26,6 @@ import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
 import com.example.myapplication.Interface.ItemClickListener;
 import com.example.myapplication.Model.Category;
-import com.example.myapplication.Model.Order;
 import com.example.myapplication.ViewHolder.MenuViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,7 +34,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
-import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -126,11 +120,23 @@ public class Home extends AppCompatActivity
 
          adapter=new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class,R.layout.menu_item,MenuViewHolder.class,category) {
             @Override
-            protected void populateViewHolder(MenuViewHolder viewHolder, final Category model, int position) {
+            protected void populateViewHolder(@NonNull MenuViewHolder viewHolder,@NonNull final Category model, int position) {
                 viewHolder.txtMenuName.setText(model.getName());
                 /*Picasso.with(getBaseContext()).load(model.getImage())
                          .into(viewHolder.imageView);*/
-                Glide.with(getApplicationContext()).load(model.getImage()).into(viewHolder.imageView);
+
+                System.out.println("İmageURL"+model.getImage());
+
+            //    Picasso.get().load(model.getImage()).resize(100,100).centerCrop().into(viewHolder.imageView);
+
+
+               /* if(model.getImage().equals("")){
+                    Toast.makeText(Home.this, "Url boş", Toast.LENGTH_SHORT).show();
+                }else{*/
+                    Glide.with(Home.this).load(model.getImage()).into(viewHolder.imageView);
+
+             //   }
+
 
 
                 final Category clickItem=model;
@@ -152,7 +158,15 @@ public class Home extends AppCompatActivity
             }
         };
 
+        //recycler_menu.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        linearLayoutManager.scrollToPosition(0);
+        adapter.startListening();
         recycler_menu.setAdapter(adapter);
+        recycler_menu.setLayoutManager(linearLayoutManager);
+
+
     }
 
     @Override
