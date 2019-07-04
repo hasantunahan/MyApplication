@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andremion.counterfab.CounterFab;
+import com.bumptech.glide.Glide;
 import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
 import com.example.myapplication.Interface.ItemClickListener;
@@ -127,8 +128,11 @@ public class Home extends AppCompatActivity
             @Override
             protected void populateViewHolder(MenuViewHolder viewHolder, final Category model, int position) {
                 viewHolder.txtMenuName.setText(model.getName());
-                Picasso.with(getBaseContext()).load(model.getImage())
-                         .into(viewHolder.imageView);
+                /*Picasso.with(getBaseContext()).load(model.getImage())
+                         .into(viewHolder.imageView);*/
+                Glide.with(getApplicationContext()).load(model.getImage()).into(viewHolder.imageView);
+
+
                 final Category clickItem=model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override

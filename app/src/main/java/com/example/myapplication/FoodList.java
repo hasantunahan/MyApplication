@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andremion.counterfab.CounterFab;
+import com.bumptech.glide.Glide;
 import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
 import com.example.myapplication.Interface.ItemClickListener;
@@ -31,6 +32,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.security.AccessController.getContext;
 
 public class FoodList extends AppCompatActivity {
 
@@ -213,8 +216,11 @@ public class FoodList extends AppCompatActivity {
             protected void populateViewHolder(final FoodViewHolder viewHolder, Food model, final int position) {
 
                 viewHolder.food_name.setText(model.getName());
-                Picasso.with(getBaseContext()).load(model.getImage())
-                        .into(viewHolder.food_image);
+               /* Picasso.with(getBaseContext()).load(model.getImage())
+                        .into(viewHolder.food_image);*/
+
+                Glide.with(getApplicationContext()).load(model.getImage()).into(viewHolder.food_image);
+
 
                 if(localDB.isFavorite(adapter.getRef(position).getKey()))
                     viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
