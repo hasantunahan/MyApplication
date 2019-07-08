@@ -64,7 +64,7 @@ public class SignIn extends AppCompatActivity {
                                 User user = dataSnapshot.child(edtPhone.getText().toString()).getValue(User.class);
                                 user.setPhone(edtPhone.getText().toString());
 
-                                if (user.getPassword().equals(edtPassword.getText().toString())) {
+                                if (user.getPassword().equals(edtPassword.getText().toString()) && user.getYetki().equals("musteri")) {
 
                                     Intent homeIntent = new Intent(SignIn.this, Home.class);
                                     Common.currentUser = user;
@@ -72,7 +72,13 @@ public class SignIn extends AppCompatActivity {
                                     finish();
 
                                     table_user.removeEventListener(this);
-                                } else if (edtPassword.getText().toString().isEmpty()) {
+                                } else if(user.getPassword().equals(edtPassword.getText().toString()) && user.getYetki().equals("satici")){
+                                    Intent homeIntent = new Intent(SignIn.this, Admin_Activity.class);
+                                    Common.currentUser = user;
+                                    startActivity(homeIntent);
+                                    finish();
+                                }
+                                else if (edtPassword.getText().toString().isEmpty()) {
                                     mDialog.dismiss();
                                     Toast.makeText(SignIn.this, "Parola gir !", Toast.LENGTH_SHORT).show();
 

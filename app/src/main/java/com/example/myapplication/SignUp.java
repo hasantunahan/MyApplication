@@ -1,16 +1,15 @@
 package com.example.myapplication;
 
 import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.myapplication.Common.Common;
 import com.example.myapplication.Model.User;
-import com.google.android.gms.common.internal.Objects;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +34,7 @@ public class SignUp extends AppCompatActivity {
         btnSignUp=(Button) findViewById(R.id.btnSignUp);
 
         //Firebase
-        FirebaseDatabase database=FirebaseDatabase.getInstance();
+        final FirebaseDatabase database=FirebaseDatabase.getInstance();
         final DatabaseReference table_user=database.getReference("User");
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -49,10 +48,10 @@ public class SignUp extends AppCompatActivity {
                     table_user.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            System.out.println("CHİLD"+dataSnapshot.child(edtPhone.getText().toString()));
 
                             //numara zaten kayıtlıysa
-                            if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
-
+                            if (dataSnapshot.child(edtPhone.getText().toString()).equals(edtPhone.getText().toString())) {
                                 mDialog.dismiss();
                                 Toast.makeText(SignUp.this, "Bu numara zaten kayıtlı", Toast.LENGTH_SHORT).show();
 
@@ -63,7 +62,7 @@ public class SignUp extends AppCompatActivity {
 
                             } else {
                                 mDialog.dismiss();
-                                User user = new User(edtName.getText().toString(), edtPassword.getText().toString());
+                                User user = new User(edtName.getText().toString(), edtPassword.getText().toString(),"musteri");
                                 table_user.child(edtPhone.getText().toString()).setValue(user);
                                 Toast.makeText(SignUp.this, "Kayıt Başarılı !", Toast.LENGTH_SHORT).show();
                                 finish();

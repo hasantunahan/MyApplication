@@ -6,12 +6,24 @@ public class User {
     private String Password;
     private String Phone;
 
+
+    public String getYetki() {
+        return Yetki;
+    }
+
+    public void setYetki(String yetki) {
+        Yetki = yetki;
+    }
+
+    private String Yetki;
+
     public User() {
     }
 
-    public User(String name, String password) {
+    public User(String name, String password,String yetki) {
         Name = name;
         Password = password;
+        Yetki=yetki;
 
     }
 

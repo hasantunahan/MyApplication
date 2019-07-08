@@ -108,11 +108,23 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
 
         rootLayout=(RelativeLayout)findViewById(R.id.rootLayout);
 
-        HashMap<String,Object> hashMap=new HashMap<>();
-        hashMap.put("Adres","");
+       FirebaseDatabase.getInstance().getReference("Adres").child(Common.currentUser.getName()).addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+           if(!dataSnapshot.exists()){
+               HashMap<String,Object> hashMap=new HashMap<>();
+               hashMap.put("Adres","");
 
-        DatabaseReference reference2=FirebaseDatabase.getInstance().getReference("Adres");
-        reference2.child(Common.currentUser.getName()).setValue(hashMap);
+               DatabaseReference reference2=FirebaseDatabase.getInstance().getReference("Adres");
+               reference2.child(Common.currentUser.getName()).setValue(hashMap);
+           }
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError databaseError) {
+
+           }
+       });
 
         btnPlace.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -65,7 +65,7 @@ public class Home extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        toolbar.setTitle("MENÜ");
+        toolbar.setTitle("MACARONLAR");
         setSupportActionBar(toolbar);
 
         //firebase
