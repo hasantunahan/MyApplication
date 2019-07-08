@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Admin_Activity">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -25,38 +26,21 @@
             tools:layout_editor_absoluteX="20dp"
             tools:layout_editor_absoluteY="20dp" />
 
-
-        <ImageView
-            android:layout_marginLeft="15dp"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/price_tag_52px"
-            />
-
-
-<!--        <TextView
-            android:id="@+id/mainsaticiisimi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="Satici Ismi : "
-            android:fontFamily="@font/kim"
-            android:textSize="14sp"
-            android:textColor="#000"
-            tools:layout_editor_absoluteX="73dp"
-            tools:layout_editor_absoluteY="209dp" />-->
-
         <TextView
-            android:id="@+id/main2usernameEdittext"
+            android:id="@+id/sirketiAdiAdminekran"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
+            android:layout_weight="1"
             android:fontFamily="@font/kim"
-            android:text="Hasan Tunahan"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:layout_editor_absoluteX="73dp"
-            tools:layout_editor_absoluteY="209dp" />
+            android:gravity="center|left"
+            android:paddingLeft="14dp"
+            android:text="SIRKET BILGILERI"
+            android:textColor="#fff"
+            android:textSize="16sp" />
+
 
     </android.support.v7.widget.Toolbar>
+
+
+
 </android.support.constraint.ConstraintLayout>

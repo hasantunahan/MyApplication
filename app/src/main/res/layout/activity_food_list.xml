@@ -8,10 +8,46 @@
     android:background="#f3f3f3"
     tools:context=".FoodList"
     >
+   <!-- <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"
+        android:background="#FD7D83"
+        android:minHeight="?attr/actionBarSize"
+        android:padding="20dp"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/adminMenuImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_menu_black_24dp"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="20dp" />
+
+        <TextView
+            android:id="@+id/sirketiAdiAdminekran"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/kim"
+            android:gravity="center|left"
+            android:paddingLeft="14dp"
+            android:text="SIRKET BILGILERI"
+            android:textColor="#fff"
+            android:textSize="16sp" />
+
+
+    </android.support.v7.widget.Toolbar>-->
 
     <com.mancj.materialsearchbar.MaterialSearchBar
         android:id="@+id/searchBar"
-        android:layout_alignParentTop="true"
+
+
         app:mt_speechMode="false"
         android:lineSpacingMultiplier="1.5"
         android:layout_margin="10dp"
