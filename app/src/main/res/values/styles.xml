@@ -26,6 +26,10 @@
 
     </style>
 
+    <style name="Kendiismim" parent="Base.Theme.AppCompat.Dialog.Alert">
+        <item name="seekBarStyle">@android:style/Widget.Holo.Light.SeekBar</item>
+    </style>
+
     <style name="customfontstyle" parent="@android:style/TextAppearance.Small">
         <item name="android:fontFamily">@font/playball</item>
     </style>

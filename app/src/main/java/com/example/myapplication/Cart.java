@@ -70,7 +70,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
     DatabaseReference requests;
 
     public TextView txtTotalPrice;
-
+    private TextView hosgeldinizKisisi;
     Button btnPlace;
 
     List<Order> cart=new ArrayList<>();
@@ -83,6 +83,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
 
         //Firebase
         database = FirebaseDatabase.getInstance();
@@ -209,6 +210,9 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
         sokakEdittext=epicdialog.findViewById(R.id.sokaEdittext);
         numaraEditext=epicdialog.findViewById(R.id.numaraEdittext);
         adresListesi=epicdialog.findViewById(R.id.adresListesiSpinner);
+        hosgeldinizKisisi=epicdialog.findViewById(R.id.siparisTamamlaKisiAdi);
+
+        hosgeldinizKisisi.setText(Common.currentUser.getName());
 
         //// Kapatma
         kapat.setOnClickListener(new View.OnClickListener() {
@@ -225,6 +229,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
                 adresConstrait.setVisibility(View.VISIBLE);
             }
         });
+
 
 
         FirebaseDatabase.getInstance().getReference("Adres").child(Common.currentUser.getName()).child("Adres").addValueEventListener(new ValueEventListener() {
