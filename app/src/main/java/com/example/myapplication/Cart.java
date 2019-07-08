@@ -1,30 +1,21 @@
 package com.example.myapplication;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,16 +27,11 @@ import com.example.myapplication.Model.Order;
 import com.example.myapplication.Model.Request;
 import com.example.myapplication.ViewHolder.CartAdapter;
 import com.example.myapplication.ViewHolder.CartViewHolder;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -122,11 +108,18 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
 
         rootLayout=(RelativeLayout)findViewById(R.id.rootLayout);
 
+        HashMap<String,Object> hashMap=new HashMap<>();
+        hashMap.put("Adres","");
+
+        DatabaseReference reference2=FirebaseDatabase.getInstance().getReference("Adres");
+        reference2.child(Common.currentUser.getName()).setValue(hashMap);
+
         btnPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(cart.size()>0)
+                if(cart.size()>0){
                     showAlertDialog();
+                }
                 else
                     Toast.makeText(Cart.this, "Sepetiniz boş", Toast.LENGTH_SHORT).show();
             }
@@ -220,33 +213,36 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
                 adresConstrait.setVisibility(View.VISIBLE);
             }
         });
-        //////
-       /* FirebaseDatabase.getInstance().getReference("Adres").child(Common.currentUser.getName()).addValueEventListener(new ValueEventListener() {
+
+
+        FirebaseDatabase.getInstance().getReference("Adres").child(Common.currentUser.getName()).child("Adres").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String adres=dataSnapshot.getValue().toString();
-                if(!dataSnapshot.exists()){
-                    adresListesi.setText(adres);
-                }else{
+                if(adres.equals("")){
                     adresListesi.setText("Adresiniz bulunmamaktadır");
                     siparisBitir.setEnabled(false);
+                }else{
+                    siparisBitir.setEnabled(true);
+                    adresListesi.setText(adres);
+
                 }
+
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
-
-
+        });
 
 
         siparisBitir.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference("Adres").child(Common.currentUser.getName()).addValueEventListener(new ValueEventListener() {
+                FirebaseDatabase.getInstance().getReference("Adres").child(Common.currentUser.getName()).child("Adres").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         System.out.println(dataSnapshot.toString());
@@ -263,7 +259,6 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
                                     cart
                             );
 
-
                             requests.child(String.valueOf(System.currentTimeMillis()))
                                     .setValue(request);
 
@@ -271,7 +266,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
 
 
                             new Database(getBaseContext()).clearChart();
-                            Toast.makeText(Cart.this,"Teşekkürler,Adres eklendi",Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(Cart.this,"Teşekkürler,Adres eklendi",Toast.LENGTH_SHORT).show();
                             finish();
                             epicdialog.dismiss();
 
