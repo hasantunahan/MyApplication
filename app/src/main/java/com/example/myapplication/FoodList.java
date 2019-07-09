@@ -18,6 +18,7 @@ import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
 import com.example.myapplication.Interface.ItemClickListener;
 import com.example.myapplication.Model.Food;
+import com.example.myapplication.Model.Order;
 import com.example.myapplication.ViewHolder.FoodViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -161,12 +163,13 @@ public class FoodList extends AppCompatActivity {
         ) {
             @Override
             protected void populateViewHolder(FoodViewHolder viewHolder, Food model, int position) {
-                viewHolder.food_name.setText(model.getName());
+                String buyuk=model.getName().toUpperCase();
+                viewHolder.food_name.setText(buyuk);
               /*  Picasso.with(getBaseContext()).load(model.getImage())
                         .into(viewHolder.food_image);*/
 
-             //   Picasso.get().load(model.getImage()).resize(100,100).centerCrop().into(viewHolder.food_image);
-                     Glide.with(getApplicationContext()).load(model.getImage()).into(viewHolder.food_image);
+             Picasso.get().load(model.getImage()).resize(100,100).centerCrop().into(viewHolder.food_image);
+                 //    Glide.with(getApplicationContext()).load(model.getImage()).into(viewHolder.food_image);
 
                 final Food local=model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
@@ -211,15 +214,56 @@ public class FoodList extends AppCompatActivity {
                 FoodViewHolder.class,
                 foodList.orderByChild("MenuId").equalTo(categoryId)) {
             @Override
-            protected void populateViewHolder(final FoodViewHolder viewHolder, Food model, final int position) {
+            protected void populateViewHolder(final FoodViewHolder viewHolder, final Food model, final int position) {
 
-                viewHolder.food_name.setText(model.getName());
+                viewHolder.food_name.setText(model.getName().toUpperCase());
+                viewHolder.price.setText(model.getPrice()+" ₺");
                /* Picasso.with(getBaseContext()).load(model.getImage())
                         .into(viewHolder.food_image);*/
 
                Glide.with(FoodList.this).load(model.getImage()).into(viewHolder.food_image);
 
                // Picasso.get().load(model.getImage()).resize(100,100).centerCrop().into(viewHolder.food_image);
+
+                viewHolder.sepet_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        new Database(getBaseContext()).addToChart(new Order(
+
+
+                                adapter.getRef(position).getKey(),
+                                model.getName(),
+                               "1",
+                                model.getPrice().toString(),
+                                model.getDiscount()
+
+
+
+                        ));
+
+                        Toast.makeText(FoodList.this,"Sepete eklendi",Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                viewHolder.share_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+               Intent shareIntent =new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                String sharedBody="body";
+                String shareSub="sub";
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT,sharedBody);
+                startActivity(Intent.createChooser(shareIntent,"Paylaş"));
+
+                    }
+                });
+
 
 
 

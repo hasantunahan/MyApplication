@@ -62,6 +62,7 @@ public class Home extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //new Database(getApplicationContext()).clearChart();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 

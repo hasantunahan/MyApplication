@@ -1,63 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    app:cardElevation="4dp"
+    android:layout_height="250dp"
     android:layout_margin="10dp"
-    app:cardCornerRadius="6dp"    >
+    app:cardCornerRadius="6dp"
+    app:cardElevation="4dp">
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/food_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:adjustViewBounds ="true"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="170dp" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-       <LinearLayout
-           android:weightSum="10"
-           android:orientation="horizontal"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_alignParentBottom="true">
+            <TextView
+                android:id="@+id/food_name"
+                android:layout_width="297dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:background="#fff"
+                android:fontFamily="@font/kim"
 
-           <TextView
-               android:background="#fff"
-               android:id="@+id/food_name"
-               android:text="Makaron İsmi"
-               android:textColor="#84B150"
-               android:padding="5dp"
-               android:fontFamily="@font/kim"
-               android:textSize="16sp"
-               android:gravity="center"
-               android:layout_weight="9"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:text="Makaron Ismi"
+                android:textColor="#84B150"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-               />
+            <ImageView
+                android:id="@+id/fav"
+                android:layout_width="29dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#fff"
+                android:padding="3dp"
+                android:tint="#404040"
+                app:layout_constraintBottom_toBottomOf="@+id/shareFoodlist"
+                app:layout_constraintEnd_toStartOf="@+id/sepeteEkleView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/shareFoodlist"
+                app:layout_constraintTop_toTopOf="@+id/shareFoodlist"
+                app:srcCompat="@drawable/ic_favorite_border_black_24dp" />
 
-           <ImageView
-               android:id="@+id/fav"
-               android:padding="3dp"
-               android:layout_width="0dp"
-               android:layout_height="match_parent"
-               android:layout_weight="1"
-               android:background="#fff"
-               android:tint="#FF3D36"
-               app:srcCompat="@drawable/ic_favorite_border_black_24dp" />
+            <ImageView
+                android:id="@+id/shareFoodlist"
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:background="#fff"
+                android:padding="3dp"
+                android:tint="#404040"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fav"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/food_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_menu_share" />
 
-       </LinearLayout>
+            <ImageView
+                android:id="@+id/sepeteEkleView"
+                android:layout_width="29dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:tint="#404040"
+                app:layout_constraintBottom_toBottomOf="@+id/fav"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/fav"
+                app:layout_constraintTop_toTopOf="@+id/fav"
+                app:srcCompat="@drawable/ic_sepeteklesayacli" />
+
+            <TextView
+                android:id="@+id/priceFoodList"
+                android:layout_width="297dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kim"
+                android:padding="6dp"
+                android:text="Price"
+                android:textColor="#404040"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/food_name"
+                app:layout_constraintStart_toStartOf="@+id/food_name"
+                app:layout_constraintTop_toBottomOf="@+id/food_name" />
+
+        </android.support.constraint.ConstraintLayout>
 
 
-
-
-    </RelativeLayout>
-
+    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.v7.widget.CardView>

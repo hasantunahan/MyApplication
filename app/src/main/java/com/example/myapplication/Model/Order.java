@@ -8,7 +8,7 @@ public class Order {
     private String Price;
     private String Discount;
 
-    public Order() {
+    public Order(String key, String name, int i, String price, String discount) {
     }
 
     public Order(String productId, String productName, String quantity, String price, String discount) {
