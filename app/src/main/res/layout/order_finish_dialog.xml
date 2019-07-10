@@ -69,7 +69,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="44dp"
             android:layout_marginRight="44dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="8dp"
             android:background="#F68A1F"
             android:drawableLeft="@drawable/ic_address"
             android:paddingLeft="25dp"
@@ -84,7 +84,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
-            app:layout_constraintVertical_bias="0.099" />
+            app:layout_constraintVertical_bias="0.056" />
 
         <Button
             android:id="@+id/siparisBitirButton"
@@ -187,6 +187,7 @@
             app:layout_constraintHorizontal_bias="0.345"
             app:layout_constraintStart_toEndOf="@+id/textView8"
             app:layout_constraintTop_toBottomOf="@+id/siparisTamamlaKisiAdi" />
+
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout

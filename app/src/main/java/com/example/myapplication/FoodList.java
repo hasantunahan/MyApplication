@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andremion.counterfab.CounterFab;
-import com.bumptech.glide.Glide;
 import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
 import com.example.myapplication.Interface.ItemClickListener;
@@ -233,9 +232,11 @@ public class FoodList extends AppCompatActivity {
                /* Picasso.with(getBaseContext()).load(model.getImage())
                         .into(viewHolder.food_image);*/
 
-               Glide.with(FoodList.this).load(model.getImage()).into(viewHolder.food_image);
+               //Glide.with(FoodList.this).load(model.getImage()).into(viewHolder.food_image);
 
                // Picasso.get().load(model.getImage()).resize(100,100).centerCrop().into(viewHolder.food_image);
+
+                Picasso.get().load(model.getImage()).fit().into(viewHolder.food_image);
 
                 viewHolder.sepet_image.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -8,12 +8,12 @@ public class Food {
     }
 
     public Food(String name, String image, String description, String price, String discount, String menuId) {
-        Name = name;
-        Image = image;
-        Description = description;
-        Price = price;
-        Discount = discount;
-        MenuId = menuId;
+        this.Name = name;
+        this.Image = image;
+        this.Description = description;
+        this.Price = price;
+        this.Discount = discount;
+        this.MenuId = menuId;
     }
 
     public String getName() {

@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class FoodDetail extends AppCompatActivity {
 
@@ -46,6 +47,8 @@ public class FoodDetail extends AppCompatActivity {
     DatabaseReference food;
     Food currentFood;
 
+    ImageView deneme;
+
 
 
 
@@ -61,6 +64,22 @@ public class FoodDetail extends AppCompatActivity {
 
         numberButton = (ElegantNumberButton) findViewById(R.id.number_button);
         btnCart= (FloatingActionButton) findViewById(R.id.btnCart);
+
+        deneme=findViewById(R.id.denemeimage);
+
+        FirebaseDatabase.getInstance().getReference("Food").child("01").child("Image").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String url = dataSnapshot.getValue().toString();
+
+                Picasso.get().load(url).fit().into(deneme);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
         btnCart.setOnClickListener(new View.OnClickListener() {

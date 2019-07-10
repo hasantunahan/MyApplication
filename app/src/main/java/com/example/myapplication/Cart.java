@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,8 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
     private  String adresid;
     private List<Request> nlist;
     private String firebaseAdres;
+    private Spinner adresSpinner;
+    private ArrayList<String> listAdres;
 
     String key;
 
@@ -91,7 +94,9 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
 
         adresid=UUID.randomUUID().toString();
         nlist=new ArrayList<>();
+        listAdres=new ArrayList<>();
 
+        //adresSpinner=findViewById(R.id.spinnerAdres);
 
         recyclerView=(RecyclerView) findViewById(R.id.listCart);
         recyclerView.setHasFixedSize(true);
@@ -333,8 +338,6 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
 
 
     }
-
-
 
     private void loadListFood() {
 
