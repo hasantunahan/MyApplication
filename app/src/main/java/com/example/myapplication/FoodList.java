@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class FoodList extends AppCompatActivity {
     DatabaseReference foodList;
     private Intent intent;
     private TextView urunlistesi_ismi;
+    private ImageView geriButton;
     String categoryId="";
 
     FirebaseRecyclerAdapter<Food, FoodViewHolder> adapter;
@@ -60,9 +62,19 @@ public class FoodList extends AppCompatActivity {
         setContentView(R.layout.activity_food_list);
         //categori ismi icin
         urunlistesi_ismi=findViewById(R.id.urunlistesi);
+        geriButton=findViewById(R.id.geriFoodlist);
+
         intent=getIntent();
         String kategori_ismi=intent.getStringExtra("kategori_ismi");
         urunlistesi_ismi.setText(kategori_ismi);
+
+        geriButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(FoodList.this,Home.class);
+                startActivity(intent);
+            }
+        });
 
         //Fİrebase
         database = FirebaseDatabase.getInstance();
@@ -244,6 +256,7 @@ public class FoodList extends AppCompatActivity {
                         ));
 
                         Toast.makeText(FoodList.this,"Sepete eklendi",Toast.LENGTH_SHORT).show();
+                        fab.setCount(new Database(getApplicationContext()).getCountCart());
 
                     }
                 });

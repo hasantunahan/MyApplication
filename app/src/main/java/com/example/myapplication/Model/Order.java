@@ -8,6 +8,9 @@ public class Order {
     private String Price;
     private String Discount;
 
+    public Order() {
+    }
+
     public Order(String key, String name, int i, String price, String discount) {
     }
 
