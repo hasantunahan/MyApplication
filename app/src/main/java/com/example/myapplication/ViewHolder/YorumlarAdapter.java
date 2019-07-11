@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.myapplication.Model.Rating;
@@ -36,6 +37,8 @@ public class YorumlarAdapter extends RecyclerView.Adapter<YorumlarAdapter.MyView
 
         myViewHolder.name.setText(list.get(i).getUserName());
         myViewHolder.yorum.setText(list.get(i).getComment());
+        myViewHolder.rating.setText(list.get(i).getRateValues()+".0");
+        myViewHolder.ratingBar.setRating(Integer.parseInt(list.get(i).getRateValues()));
     }
 
     @Override
@@ -45,12 +48,15 @@ public class YorumlarAdapter extends RecyclerView.Adapter<YorumlarAdapter.MyView
 
     class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name,yorum;
+        TextView name,yorum,rating;
+        RatingBar ratingBar;
 
         public MyViewHolder(View itemview){
             super(itemview);
             name=itemview.findViewById(R.id.yorumlarName);
             yorum=itemview.findViewById(R.id.yorumlarYorum);
+            rating=itemview.findViewById(R.id.ratingYorumlar);
+            ratingBar=itemview.findViewById(R.id.ratingBarYorumlar);
         }
     }
 }
