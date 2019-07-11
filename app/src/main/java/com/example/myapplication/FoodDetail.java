@@ -56,7 +56,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     Food currentFood;
 
 
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="270dp"
     android:layout_margin="10dp"
     app:cardCornerRadius="6dp"
     app:cardElevation="4dp">
@@ -70,12 +70,10 @@
                 android:layout_width="28dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:background="#fff"
                 android:padding="3dp"
                 android:tint="#404040"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/fav"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/food_name"
@@ -96,6 +94,25 @@
                 app:layout_constraintTop_toTopOf="@+id/fav"
                 app:srcCompat="@drawable/ic_sepeteklesayacli" />
 
+            <ImageView
+                android:id="@+id/yorumlarImage"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:tint="#404040"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.814"
+                app:layout_constraintStart_toEndOf="@+id/priceFoodList"
+                app:layout_constraintTop_toBottomOf="@+id/shareFoodlist"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_message_black_24dp" />
+
             <TextView
                 android:id="@+id/priceFoodList"
                 android:layout_width="297dp"
@@ -109,6 +126,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/food_name"
                 app:layout_constraintStart_toStartOf="@+id/food_name"
                 app:layout_constraintTop_toBottomOf="@+id/food_name" />
+
 
         </android.support.constraint.ConstraintLayout>
 

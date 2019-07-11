@@ -278,6 +278,14 @@ public class FoodList extends AppCompatActivity {
                     }
                 });
 
+                viewHolder.yorumlar_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent(FoodList.this,Yorumlar.class);
+                        intent.putExtra("FoodId",adapter.getRef(position).getKey());
+                        startActivity(intent);
+                    }
+                });
 
 
 
