@@ -179,13 +179,5 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <ImageView
-        android:id="@+id/denemeimage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_ok" />
-
-
-
 
 </android.support.design.widget.CoordinatorLayout>

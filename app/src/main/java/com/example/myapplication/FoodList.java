@@ -170,7 +170,7 @@ public class FoodList extends AppCompatActivity {
                 Food.class,
                 R.layout.food_item,
                 FoodViewHolder.class,
-                foodList.orderByChild("Name").equalTo(text.toString())
+                foodList.orderByChild("name").equalTo(text.toString())
         ) {
             @Override
             protected void populateViewHolder(FoodViewHolder viewHolder, Food model, int position) {
@@ -200,7 +200,7 @@ public class FoodList extends AppCompatActivity {
 
 
     private void loadSuggest() {
-        foodList.orderByChild("MenuId").equalTo(categoryId)
+        foodList.orderByChild("menuId").equalTo(categoryId)
 
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -223,7 +223,7 @@ public class FoodList extends AppCompatActivity {
         adapter=new FirebaseRecyclerAdapter<Food, FoodViewHolder>(Food.class,
                 R.layout.food_item,
                 FoodViewHolder.class,
-                foodList.orderByChild("MenuId").equalTo(categoryId)) {
+                foodList.orderByChild("menuId").equalTo(categoryId)) {
             @Override
             protected void populateViewHolder(final FoodViewHolder viewHolder, final Food model, final int position) {
 
@@ -236,7 +236,7 @@ public class FoodList extends AppCompatActivity {
 
                // Picasso.get().load(model.getImage()).resize(100,100).centerCrop().into(viewHolder.food_image);
 
-                Picasso.get().load(model.getImage()).fit().into(viewHolder.food_image);
+                Picasso.get().load(model.getImage()).resize(1000,1000).centerCrop().into(viewHolder.food_image);
 
                 viewHolder.sepet_image.setOnClickListener(new View.OnClickListener() {
                     @Override
