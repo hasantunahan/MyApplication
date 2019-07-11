@@ -22,34 +22,41 @@ import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
 import com.example.myapplication.Model.Food;
 import com.example.myapplication.Model.Order;
+import com.example.myapplication.Model.Rating;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.stepstone.apprating.AppRatingDialog;
+import com.stepstone.apprating.listener.RatingDialogListener;
 
-public class FoodDetail extends AppCompatActivity {
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
+
+public class FoodDetail extends AppCompatActivity implements RatingDialogListener{
 
     private Dialog epicdialog;
     private Button alisveriseDevam;
     private Button sepeteGitDevam;
     private ImageView alertDismissButton;
-
+    private FloatingActionButton btnRating;
+    private RatingBar ratingBar;
+    private DatabaseReference rating_ref;
+    private TextView avgText;
     TextView food_name,food_price,food_description,mRatingScale;
     ImageView food_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
-    FloatingActionButton btnCart,btnRating;
+    FloatingActionButton btnCart;
     ElegantNumberButton numberButton;
-    RatingBar ratingBar;
     String foodId;
     FirebaseDatabase database;
     DatabaseReference food;
     Food currentFood;
 
 
-
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +65,23 @@ public class FoodDetail extends AppCompatActivity {
         //.Firebase
         database =FirebaseDatabase.getInstance();
         food=database.getReference("Food");
+        rating_ref=FirebaseDatabase.getInstance().getReference("Rating");
+
         epicdialog=new Dialog(FoodDetail.this,R.style.AppTheme_NoActionBar);
 
         numberButton = (ElegantNumberButton) findViewById(R.id.number_button);
         btnCart= (FloatingActionButton) findViewById(R.id.btnCart);
+
+        btnRating=findViewById(R.id.btnRating);
+        ratingBar=findViewById(R.id.ratingBar);
+        avgText=findViewById(R.id.avg);
+
+        btnRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRatingDialog();
+            }
+        });
 
 
 
@@ -102,14 +122,64 @@ public class FoodDetail extends AppCompatActivity {
             foodId=getIntent().getStringExtra("FoodId");
         if(!foodId.isEmpty())
             {
-                if(Common.isConnectedToInternet(getBaseContext()))
+                if(Common.isConnectedToInternet(getBaseContext())){
                     getDetailFood(foodId);
+                    getRatingFood(foodId);}
                 else {
                     Toast.makeText(FoodDetail.this, "İnternet bağlantınızı kontrol ediniz", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
 
+
+
+    }
+
+    private void getRatingFood(String foodId) {
+        com.google.firebase.database.Query foodRating=rating_ref.orderByChild("foodId").equalTo(foodId);
+        foodRating.addValueEventListener(new ValueEventListener() {
+            int count=0;
+            int sum=0;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+               for(DataSnapshot snapshot :dataSnapshot.getChildren()){
+                   Rating item=snapshot.getValue(Rating.class);
+                   sum += Integer.parseInt(item.getRateValues());
+                   count++;
+               }
+               if( count !=0){
+                   float avg=sum/count;
+                   ratingBar.setRating(avg);
+                   avgText.setText(String.valueOf(avg));
+               }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void showRatingDialog() {
+        new AppRatingDialog.Builder().
+                setPositiveButtonText("Gonder")
+                .setNegativeButtonText("Iptal")
+                .setNoteDescriptions(Arrays.asList("Cok kotu","kotu","iyi","Cok iyi","Mükemmel"))
+                .setDefaultRating(1)
+                .setTitle("Derecelendir")
+                .setDescription("Lütfen seceneginizi belirtiniz")
+                .setTitleTextColor(R.color.appYesil)
+                .setHint("Yorumunuzu buraya giriniz")
+                .setHintTextColor(R.color.colorAccent)
+                .setCommentTextColor(R.color.white)
+                .setCommentBackgroundColor(R.color.colorPrimaryDark)
+                .setWindowAnimation(R.style.RatingDialogFadeAnim)
+                .create(FoodDetail.this)
+                .show();
 
 
     }
@@ -185,4 +255,42 @@ public class FoodDetail extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onNegativeButtonClicked() {
+
+    }
+
+    @Override
+    public void onPositiveButtonClicked(int i, @NotNull String s) {
+
+        final Rating rating=new Rating(
+                Common.currentUser.getPhone(),
+                Common.currentUser.getName(),
+                foodId,
+                String.valueOf(i),
+                s
+        );
+
+        rating_ref.child(Common.currentUser.getPhone()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+             if(dataSnapshot.child(Common.currentUser.getPhone()).exists()){
+                 rating_ref.child(Common.currentUser.getPhone()).removeValue();
+                 rating_ref.child(Common.currentUser.getPhone()).setValue(rating);
+             }else{
+                 rating_ref.child(Common.currentUser.getPhone()).setValue(rating);
+             }
+                Toast.makeText(FoodDetail.this, "Derecelendirginiz icin tesekkürler", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 }
