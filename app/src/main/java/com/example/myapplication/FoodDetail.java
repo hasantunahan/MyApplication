@@ -54,7 +54,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     FirebaseDatabase database;
     DatabaseReference food;
     Food currentFood;
-
+    String key;
 
 
     @Override
@@ -136,23 +136,23 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     }
 
     private void getRatingFood(String foodId) {
-        com.google.firebase.database.Query foodRating=rating_ref.orderByChild("foodId").equalTo(foodId);
-        foodRating.addValueEventListener(new ValueEventListener() {
-            int count=0;
-            int sum=0;
+
+        FirebaseDatabase.getInstance().getReference("Rating").addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-               for(DataSnapshot snapshot :dataSnapshot.getChildren()){
-                   Rating item=snapshot.getValue(Rating.class);
-                   sum += Integer.parseInt(item.getRateValues());
-                   count++;
-               }
-               if( count !=0){
-                   float avg=sum/count;
-                   ratingBar.setRating(avg);
-                   avgText.setText(String.valueOf(avg));
-               }
+                /*for( DataSnapshot snapshot1 : dataSnapshot.getChildren()){
+                    Rating item=snapshot1.getValue(Rating.class);
+                    sum += Integer.parseInt(item.getRateValues());
+                    count++;
+                }*/
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    key=snapshot.getKey();
+                    goster(key);
+                }
+
 
             }
 
@@ -162,6 +162,31 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
             }
         });
 
+    }
+
+    private void goster(String key) {
+        FirebaseDatabase.getInstance().getReference("Rating").child(key).orderByChild("foodId").equalTo(foodId).addValueEventListener(new ValueEventListener() {
+            int count=0;
+            int sum=0;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for( DataSnapshot snapshot1 : dataSnapshot.getChildren()){
+                    Rating item=snapshot1.getValue(Rating.class);
+                    sum += Integer.parseInt(item.getRateValues());
+                    count++;
+                }
+                if( count !=0){
+                    float avg=sum/count;
+                    ratingBar.setRating(avg);
+                    avgText.setText(String.valueOf(avg));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void showRatingDialog() {
@@ -272,14 +297,14 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
                 s
         );
 
-        rating_ref.child(Common.currentUser.getPhone()).addValueEventListener(new ValueEventListener() {
+        rating_ref.child(Common.currentUser.getPhone()).child(foodId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-             if(dataSnapshot.child(Common.currentUser.getPhone()).exists()){
-                 rating_ref.child(Common.currentUser.getPhone()).removeValue();
-                 rating_ref.child(Common.currentUser.getPhone()).setValue(rating);
+             if(dataSnapshot.child(Common.currentUser.getPhone()).child(foodId).exists()){
+                 rating_ref.child(Common.currentUser.getPhone()).child(foodId).removeValue();
+                 rating_ref.child(Common.currentUser.getPhone()).child(foodId).setValue(rating);
              }else{
-                 rating_ref.child(Common.currentUser.getPhone()).setValue(rating);
+                 rating_ref.child(Common.currentUser.getPhone()).child(foodId).setValue(rating);
              }
                 Toast.makeText(FoodDetail.this, "Derecelendirginiz icin tesekkürler", Toast.LENGTH_SHORT).show();
 

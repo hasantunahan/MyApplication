@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.myapplication.Common.Common;
 import com.example.myapplication.Model.Rating;
 import com.example.myapplication.ViewHolder.YorumlarAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -24,13 +25,15 @@ public class Yorumlar extends AppCompatActivity {
     DatabaseReference reference;
     RecyclerView recyclerView;
     ArrayList<Rating> list;
+    ArrayList<String> keylist;
     Intent intent;
     String foodId;
     YorumlarAdapter adapter;
     ImageView geri;
+    String key;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_yorumlar);
         intent=getIntent();
@@ -51,6 +54,25 @@ public class Yorumlar extends AppCompatActivity {
 
         reference= FirebaseDatabase.getInstance().getReference().child("Rating");
         reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                   key=snapshot.getKey();
+                   goster(key);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void goster(String key) {
+
+        FirebaseDatabase.getInstance().getReference("Rating").child(key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for ( DataSnapshot snapshot : dataSnapshot.getChildren()){
