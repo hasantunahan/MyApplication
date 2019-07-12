@@ -45,6 +45,8 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     private RatingBar ratingBar;
     private DatabaseReference rating_ref;
     private TextView avgText;
+    private int yorum_sayisi;
+    private int sum;
     TextView food_name,food_price,food_description,mRatingScale;
     ImageView food_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -55,6 +57,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     DatabaseReference food;
     Food currentFood;
     String key;
+
 
 
     @Override
@@ -135,23 +138,28 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
 
     }
 
-    private void getRatingFood(String foodId) {
+    private void getRatingFood(final String foodId) {
 
-        FirebaseDatabase.getInstance().getReference("Rating").addValueEventListener(new ValueEventListener() {
-
+        FirebaseDatabase.getInstance().getReference("Rating").child(foodId).addValueEventListener(new ValueEventListener() {
+            int count=0;
+            int sum=0;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                /*for( DataSnapshot snapshot1 : dataSnapshot.getChildren()){
-                    Rating item=snapshot1.getValue(Rating.class);
-                    sum += Integer.parseInt(item.getRateValues());
-                    count++;
-                }*/
-
+            if(dataSnapshot.exists()){
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    key=snapshot.getKey();
-                    goster(key);
+                    Rating r= snapshot.getValue(Rating.class);
+                    if(r.getFoodId().equals(foodId)){
+                        count++;
+                        sum += Integer.parseInt(r.getRateValues());
+                    }
                 }
+                if( count !=0){
+                    float avg=sum/count;
+                    ratingBar.setRating(avg);
+                    avgText.setText(String.valueOf(avg));
+                }
+
+            }
 
 
             }
@@ -164,22 +172,28 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
 
     }
 
-    private void goster(String key) {
-        FirebaseDatabase.getInstance().getReference("Rating").child(key).orderByChild("foodId").equalTo(foodId).addValueEventListener(new ValueEventListener() {
-            int count=0;
-            int sum=0;
+
+
+
+
+
+    private void goster(final String key) {
+        FirebaseDatabase.getInstance().getReference("Rating").child(key).child(foodId).addValueEventListener(new ValueEventListener() {
+            //int count=0;
+            //int sum;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for( DataSnapshot snapshot1 : dataSnapshot.getChildren()){
-                    Rating item=snapshot1.getValue(Rating.class);
-                    sum += Integer.parseInt(item.getRateValues());
-                    count++;
-                }
-                if( count !=0){
-                    float avg=sum/count;
+
+              /*      yorum_sayisi=(int)dataSnapshot.getChildrenCount();
+
+                System.out.println("yorumsayisi"+ yorum_sayisi);
+                avgText.setText(yorum_sayisi+"");*/
+
+                /*if( yorum_sayisi !=0){
+                    float avg=sum/yorum_sayisi;
                     ratingBar.setRating(avg);
                     avgText.setText(String.valueOf(avg));
-                }
+                }*/
             }
 
             @Override
@@ -301,10 +315,10 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
              if(dataSnapshot.child(Common.currentUser.getPhone()).child(foodId).exists()){
-                 rating_ref.child(Common.currentUser.getPhone()).child(foodId).removeValue();
-                 rating_ref.child(Common.currentUser.getPhone()).child(foodId).setValue(rating);
+                 rating_ref.child(foodId).child(Common.currentUser.getPhone()).removeValue();
+                 rating_ref.child(foodId).child(Common.currentUser.getPhone()).setValue(rating);
              }else{
-                 rating_ref.child(Common.currentUser.getPhone()).child(foodId).setValue(rating);
+                 rating_ref.child(foodId).child(Common.currentUser.getPhone()).setValue(rating);
              }
                 Toast.makeText(FoodDetail.this, "Derecelendirginiz icin tesekkürler", Toast.LENGTH_SHORT).show();
 
