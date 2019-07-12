@@ -4,8 +4,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -142,7 +145,8 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
 
         FirebaseDatabase.getInstance().getReference("Rating").child(foodId).addValueEventListener(new ValueEventListener() {
             int count=0;
-            int sum=0;
+            float sum=0;
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if(dataSnapshot.exists()){
@@ -150,13 +154,14 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
                     Rating r= snapshot.getValue(Rating.class);
                     if(r.getFoodId().equals(foodId)){
                         count++;
-                        sum += Integer.parseInt(r.getRateValues());
+                        sum += Float.parseFloat(r.getRateValues());
                     }
                 }
                 if( count !=0){
-                    float avg=sum/count;
+                    float avg=(sum/count);
+                    String x = new DecimalFormat("#,#0.0").format(avg);
                     ratingBar.setRating(avg);
-                    avgText.setText(String.valueOf(avg));
+                    avgText.setText(x+"");
                 }
 
             }
@@ -173,35 +178,6 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     }
 
 
-
-
-
-
-    private void goster(final String key) {
-        FirebaseDatabase.getInstance().getReference("Rating").child(key).child(foodId).addValueEventListener(new ValueEventListener() {
-            //int count=0;
-            //int sum;
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-              /*      yorum_sayisi=(int)dataSnapshot.getChildrenCount();
-
-                System.out.println("yorumsayisi"+ yorum_sayisi);
-                avgText.setText(yorum_sayisi+"");*/
-
-                /*if( yorum_sayisi !=0){
-                    float avg=sum/yorum_sayisi;
-                    ratingBar.setRating(avg);
-                    avgText.setText(String.valueOf(avg));
-                }*/
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     private void showRatingDialog() {
         new AppRatingDialog.Builder().
@@ -211,12 +187,13 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
                 .setDefaultRating(1)
                 .setTitle("Derecelendir")
                 .setDescription("Lütfen seceneginizi belirtiniz")
-                .setTitleTextColor(R.color.appYesil)
+                .setTitleTextColor(R.color.colorAccent)
                 .setHint("Yorumunuzu buraya giriniz")
-                .setHintTextColor(R.color.colorAccent)
-                .setCommentTextColor(R.color.white)
-                .setCommentBackgroundColor(R.color.colorPrimaryDark)
+                .setHintTextColor(R.color.colorPrimaryDark)
+                .setCommentTextColor(R.color.colorPrimaryDark)
+                .setCommentBackgroundColor(R.color.acikGri)
                 .setWindowAnimation(R.style.RatingDialogFadeAnim)
+                .setDescriptionTextColor(R.color.colorPrimaryDark)
                 .create(FoodDetail.this)
                 .show();
 

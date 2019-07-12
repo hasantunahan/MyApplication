@@ -19,6 +19,7 @@ import com.example.myapplication.Database.Database;
 import com.example.myapplication.Interface.ItemClickListener;
 import com.example.myapplication.Model.Food;
 import com.example.myapplication.Model.Order;
+import com.example.myapplication.Model.Rating;
 import com.example.myapplication.ViewHolder.FoodViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -321,8 +322,43 @@ public class FoodList extends AppCompatActivity {
                     }
                 });
 
+                FirebaseDatabase.getInstance().getReference("Rating").child(adapter.getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
+                    int count=0;
+                    float sum=0;
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                Rating r= snapshot.getValue(Rating.class);
+                                if(r.getFoodId().equals(adapter.getRef(position).getKey())){
+                                    count++;
+                                    sum += Float.parseFloat(r.getRateValues());
+                                }
+                            }
+                            if( count !=0){
+                                float avg=sum/count;
+                                viewHolder.yorumsayisi.setText("("+count+" yorum)");
+                                if(avg >=4){
+                                    viewHolder.kalitekontrol.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
             }
         };
+
+
 
 
         recyclerView.setAdapter(adapter);
