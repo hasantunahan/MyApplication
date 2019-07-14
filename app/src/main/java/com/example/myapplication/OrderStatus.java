@@ -1,11 +1,9 @@
 package com.example.myapplication;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,9 +12,7 @@ import android.widget.Toast;
 import com.example.myapplication.Common.Common;
 import com.example.myapplication.Model.Request;
 import com.example.myapplication.ViewHolder.OrderViewHolder;
-import com.firebase.ui.database.FirebaseIndexRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,6 +26,8 @@ public class OrderStatus extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference requests;
+
+    
 
 
     @Override
