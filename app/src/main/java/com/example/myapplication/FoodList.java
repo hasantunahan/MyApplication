@@ -362,9 +362,9 @@ public class FoodList extends AppCompatActivity {
                                                 reference2.child(Common.currentUser.getName()).child(adapter.getRef(position).getKey()).setValue(hashMap);
                                                 viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
                                                 Toast.makeText(FoodList.this, "Favorilere eklendi", Toast.LENGTH_SHORT).show();
-
-
-
+                                                Intent intent=new Intent(FoodList.this,Favoriler.class);
+                                                intent.putExtra("FoodId",adapter.getRef(position).getKey());
+                                               // startActivity(intent);
 
                                             }else{
                                                 fav_Ref.child(Common.currentUser.getName()).child(adapter.getRef(position).getKey()).removeValue();
