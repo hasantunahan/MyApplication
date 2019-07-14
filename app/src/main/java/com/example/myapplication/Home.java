@@ -226,6 +226,10 @@ public class Home extends AppCompatActivity
         }else if(id==R.id.nav_change_pwd){
             showChangePasswordDialog();
         }
+        else if( id==R.id.nav_fav){
+                Intent intent=new Intent(Home.this,Favoriler.class);
+                startActivity(intent);
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

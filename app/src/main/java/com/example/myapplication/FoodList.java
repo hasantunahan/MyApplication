@@ -31,6 +31,7 @@ import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FoodList extends AppCompatActivity {
@@ -44,6 +45,8 @@ public class FoodList extends AppCompatActivity {
     private TextView urunlistesi_ismi;
     private ImageView geriButton;
     String categoryId="";
+    private int begenisayisi;
+    private String foodidKey;
 
     FirebaseRecyclerAdapter<Food, FoodViewHolder> adapter;
 
@@ -60,6 +63,9 @@ public class FoodList extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
+
+
+
         //categori ismi icin
         urunlistesi_ismi=findViewById(R.id.urunlistesi);
         geriButton=findViewById(R.id.geriFoodlist);
@@ -289,8 +295,8 @@ public class FoodList extends AppCompatActivity {
                 });
 
 
-
-                if(localDB.isFavorite(adapter.getRef(position).getKey()))
+//likeeee
+               /* if(localDB.isFavorite(adapter.getRef(position).getKey()))
                     viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
 
                 viewHolder.fav_image.setOnClickListener(new View.OnClickListener() {
@@ -309,7 +315,78 @@ public class FoodList extends AppCompatActivity {
 
                         }
                     }
-                });
+                });*/
+
+
+
+
+                ////fav_basla
+
+
+                //viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
+                                final DatabaseReference fav_Ref=FirebaseDatabase.getInstance().getReference("Favori");
+
+                                fav_Ref.child(adapter.getRef(position).getKey()).child(Common.currentUser.getName()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if( dataSnapshot.exists()){
+                                            viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                            viewHolder.fav_image.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    fav_Ref.child(adapter.getRef(position).getKey()).child(Common.currentUser.getName()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if(!dataSnapshot.exists()){
+                                                HashMap<String,Object> hashMap=new HashMap<>();
+                                                hashMap.put("name",model.getName());
+                                                hashMap.put("image",model.getImage());
+                                                hashMap.put("description",model.getDescription());
+                                                hashMap.put("price",model.getPrice());
+                                                hashMap.put("discount",model.getDiscount());
+                                                hashMap.put("menuId",model.getMenuId());
+                                                DatabaseReference reference2=FirebaseDatabase.getInstance().getReference("Favori");
+                                                reference2.child(adapter.getRef(position).getKey()).child(Common.currentUser.getName()).setValue(hashMap);
+                                                viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
+                                                Toast.makeText(FoodList.this, "Favorilere eklendi", Toast.LENGTH_SHORT).show();
+
+
+
+
+                                            }else{
+                                                fav_Ref.child(adapter.getRef(position).getKey()).child(Common.currentUser.getName()).removeValue();
+                                                viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                                                Toast.makeText(FoodList.this, "Favorilerden silindi", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+
+                                }
+                            });
+
+
+
+
+
+                ///fav_bitti
+
 
                 final Food local=model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
@@ -355,8 +432,12 @@ public class FoodList extends AppCompatActivity {
                 });
 
 
-            }
-        };
+
+
+
+
+            }//viewHolder bitiş
+        };//fonk
 
 
 
