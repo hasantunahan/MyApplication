@@ -1,6 +1,7 @@
 package com.example.myapplication.ViewHolder;
 
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,9 +12,9 @@ import com.example.myapplication.R;
 
 public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView food_name,price,yorumsayisi,begenisayisi;
-    public ImageView food_image,fav_image,sepet_image,share_image,yorumlar_image,kalitekontrol;
-
+    public TextView food_name,price,yorumsayisi,ratingOrt;
+    public ImageView food_image,fav_image,sepet_image,share_image,yorumlar_image,kalitekontrol,ratingStar;
+    public ConstraintLayout layout;
     private ItemClickListener itemClickListener;
 
     public void setItemClickListener(ItemClickListener itemClickListener) {
@@ -32,7 +33,10 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCl
        yorumlar_image=itemView.findViewById(R.id.yorumlarImage);
         yorumsayisi=itemView.findViewById(R.id.yorumSayisiTextView);
         kalitekontrol=itemView.findViewById(R.id.kalitekontrol);
-      // begenisayisi=itemView.findViewById(R.id.begeniSayisiText);
+      ratingOrt=itemView.findViewById(R.id.ratingTextView);
+      ratingStar=itemView.findViewById(R.id.ratingStarrr);
+      layout=itemView.findViewById(R.id.ratingConstrait);
+
         itemView.setOnClickListener(this);
 
 

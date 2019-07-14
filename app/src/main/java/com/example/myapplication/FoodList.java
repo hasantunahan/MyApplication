@@ -1,8 +1,11 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -326,7 +329,7 @@ public class FoodList extends AppCompatActivity {
                 //viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
                                 final DatabaseReference fav_Ref=FirebaseDatabase.getInstance().getReference("Favori");
 
-                                fav_Ref.child(adapter.getRef(position).getKey()).child(Common.currentUser.getName()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                fav_Ref.child(Common.currentUser.getName()).child(adapter.getRef(position).getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if( dataSnapshot.exists()){
@@ -344,7 +347,7 @@ public class FoodList extends AppCompatActivity {
                             viewHolder.fav_image.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    fav_Ref.child(adapter.getRef(position).getKey()).child(Common.currentUser.getName()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    fav_Ref.child(Common.currentUser.getName()).child(adapter.getRef(position).getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             if(!dataSnapshot.exists()){
@@ -356,7 +359,7 @@ public class FoodList extends AppCompatActivity {
                                                 hashMap.put("discount",model.getDiscount());
                                                 hashMap.put("menuId",model.getMenuId());
                                                 DatabaseReference reference2=FirebaseDatabase.getInstance().getReference("Favori");
-                                                reference2.child(adapter.getRef(position).getKey()).child(Common.currentUser.getName()).setValue(hashMap);
+                                                reference2.child(Common.currentUser.getName()).child(adapter.getRef(position).getKey()).setValue(hashMap);
                                                 viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
                                                 Toast.makeText(FoodList.this, "Favorilere eklendi", Toast.LENGTH_SHORT).show();
 
@@ -364,7 +367,7 @@ public class FoodList extends AppCompatActivity {
 
 
                                             }else{
-                                                fav_Ref.child(adapter.getRef(position).getKey()).child(Common.currentUser.getName()).removeValue();
+                                                fav_Ref.child(Common.currentUser.getName()).child(adapter.getRef(position).getKey()).removeValue();
                                                 viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_border_black_24dp);
                                                 Toast.makeText(FoodList.this, "Favorilerden silindi", Toast.LENGTH_SHORT).show();
                                             }
@@ -402,6 +405,7 @@ public class FoodList extends AppCompatActivity {
                 FirebaseDatabase.getInstance().getReference("Rating").child(adapter.getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
                     int count=0;
                     float sum=0;
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists()){
@@ -414,9 +418,15 @@ public class FoodList extends AppCompatActivity {
                             }
                             if( count !=0){
                                 float avg=sum/count;
+                                String x = new DecimalFormat("#,#0.0").format(avg);
                                 viewHolder.yorumsayisi.setText("("+count+" yorum)");
                                 if(avg >=4){
-                                    viewHolder.kalitekontrol.setVisibility(View.VISIBLE);
+                                    //iewHolder.kalitekontrol.setVisibility(View.VISIBLE);
+                                  viewHolder.layout.setVisibility(View.VISIBLE);
+                                  viewHolder.ratingStar.setVisibility(View.VISIBLE);
+                                  viewHolder.ratingOrt.setVisibility(View.VISIBLE);
+                                  viewHolder.ratingOrt.setText(x);
+
                                 }
                             }
 
