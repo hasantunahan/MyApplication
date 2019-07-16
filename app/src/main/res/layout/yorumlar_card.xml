@@ -55,7 +55,7 @@
             android:layout_marginLeft="16dp"
             android:text="0.0"
             android:textColor="#000"
-            android:textSize="25dp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/ratingBarYorumlar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ratingBarYorumlar"
@@ -63,19 +63,23 @@
 
         <RatingBar
             android:id="@+id/ratingBarYorumlar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="9dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:outlineAmbientShadowColor="@color/appYesil"
+            android:rating="3"
+            android:stepSize="1"
+            android:theme="@style/RatingBar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.184"
+            app:layout_constraintHorizontal_bias="0.051"
             app:layout_constraintStart_toEndOf="@+id/ratingYorumlar"
             app:layout_constraintTop_toBottomOf="@+id/yorumlarYorum"
-            app:layout_constraintVertical_bias="0.013" />
+            app:layout_constraintVertical_bias="0.833" />
 
     </android.support.constraint.ConstraintLayout>
 
