@@ -1,15 +1,15 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.example.myapplication.Common.Common;
 import com.example.myapplication.Model.Rating;
 import com.example.myapplication.ViewHolder.YorumlarAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -22,15 +22,17 @@ import java.util.ArrayList;
 
 public class Yorumlar extends AppCompatActivity {
 
-    DatabaseReference reference;
-    RecyclerView recyclerView;
-    ArrayList<Rating> list;
-    ArrayList<String> keylist;
-    Intent intent;
-    String foodId;
-    YorumlarAdapter adapter;
-    ImageView geri;
-    String key;
+    private DatabaseReference reference;
+    private RecyclerView recyclerView;
+    private ArrayList<Rating> list;
+    private ArrayList<String> keylist;
+    private Intent intent;
+    private String foodId;
+    private YorumlarAdapter adapter;
+    private ImageView geri;
+    private String key;
+    private TextView yorumYoktext;
+    private ImageView yorumYokImageView;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class Yorumlar extends AppCompatActivity {
         setContentView(R.layout.activity_yorumlar);
         intent=getIntent();
         foodId=intent.getStringExtra("FoodId");
+        yorumYokImageView=findViewById(R.id.yorumYokimage);
+        yorumYoktext=findViewById(R.id.yorumYoktextView);
 
         recyclerView=findViewById(R.id.yorumlarRecyler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -82,8 +86,15 @@ public class Yorumlar extends AppCompatActivity {
                         list.add(r);
                     }
                 }
-                adapter=new YorumlarAdapter(Yorumlar.this,list);
-                recyclerView.setAdapter(adapter);
+                if(list.size() >0){
+                    adapter=new YorumlarAdapter(Yorumlar.this,list);
+                    recyclerView.setAdapter(adapter);
+                }else{
+                    yorumYokImageView.setVisibility(View.VISIBLE);
+                    yorumYoktext.setVisibility(View.VISIBLE);
+                }
+
+
             }
 
             @Override
