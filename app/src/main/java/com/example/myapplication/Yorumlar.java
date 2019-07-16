@@ -89,6 +89,8 @@ public class Yorumlar extends AppCompatActivity {
                 if(list.size() >0){
                     adapter=new YorumlarAdapter(Yorumlar.this,list);
                     recyclerView.setAdapter(adapter);
+                    yorumYoktext.setVisibility(View.GONE);
+                    yorumYokImageView.setVisibility(View.GONE);
                 }else{
                     yorumYokImageView.setVisibility(View.VISIBLE);
                     yorumYoktext.setVisibility(View.VISIBLE);
