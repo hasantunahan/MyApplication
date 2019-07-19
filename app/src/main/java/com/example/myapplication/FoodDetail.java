@@ -287,7 +287,8 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
                 Common.currentUser.getName(),
                 foodId,
                 String.valueOf(i),
-                s
+                s,
+                String.valueOf(System.currentTimeMillis())
         );
 
         rating_ref.child(Common.currentUser.getPhone()).child(foodId).addValueEventListener(new ValueEventListener() {

@@ -56,6 +56,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_below="@+id/barr"
+        android:background="@android:color/white"
         android:paddingTop="3dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
