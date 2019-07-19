@@ -429,6 +429,7 @@ public class FoodList extends AppCompatActivity {
 
                                 }
                             }
+                            count=0;
 
                         }
 

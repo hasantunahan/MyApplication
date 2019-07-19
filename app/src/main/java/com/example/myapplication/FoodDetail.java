@@ -12,6 +12,8 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,6 +28,7 @@ import com.example.myapplication.Database.Database;
 import com.example.myapplication.Model.Food;
 import com.example.myapplication.Model.Order;
 import com.example.myapplication.Model.Rating;
+import com.example.myapplication.ViewHolder.YorumlarAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,10 +39,12 @@ import com.stepstone.apprating.listener.RatingDialogListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FoodDetail extends AppCompatActivity implements RatingDialogListener{
 
+    private DatabaseReference reference;
     private Dialog epicdialog;
     private Button alisveriseDevam;
     private Button sepeteGitDevam;
@@ -50,20 +55,21 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     private TextView avgText;
     private int yorum_sayisi;
     private int sum;
+    private RecyclerView yorumlarRecyler;
+    private ArrayList<Rating> list;
+    private YorumlarAdapter adapter;
+    private TextView yorumlarıGor;
     TextView food_name,food_price,food_description,mRatingScale;
     ImageView food_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
  //   FloatingActionButton btnCart;
-  Button btnCart;
-
+    Button btnCart;
     ElegantNumberButton numberButton;
     String foodId;
     FirebaseDatabase database;
     DatabaseReference food;
     Food currentFood;
-    String key;
-
-
+    private String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +80,9 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
         database =FirebaseDatabase.getInstance();
         food=database.getReference("Food");
         rating_ref=FirebaseDatabase.getInstance().getReference("Rating");
-
+        list=new ArrayList<Rating>();
         epicdialog=new Dialog(FoodDetail.this,R.style.AppTheme_NoActionBar);
-
+        yorumlarıGor=findViewById(R.id.yorumlarıGör);
         numberButton = (ElegantNumberButton) findViewById(R.id.number_button);
         btnCart=  findViewById(R.id.btnCart);
 
@@ -90,6 +96,36 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
                 showRatingDialog();
             }
         });
+
+        yorumlarRecyler=findViewById(R.id.detailYorumlarRecycler);
+
+        yorumlarıGor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(FoodDetail.this,Yorumlar.class);
+                intent.putExtra("FoodId",foodId);
+                startActivity(intent);
+            }
+        });
+
+        yorumlarRecyler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        reference= FirebaseDatabase.getInstance().getReference().child("Rating");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    key=snapshot.getKey();
+                    goster(key);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
 
 
@@ -143,9 +179,35 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
 
     }
 
+    private void goster(String key) {
+
+        FirebaseDatabase.getInstance().getReference("Rating").child(key).orderByChild("time").limitToLast(2).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for ( DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Rating r= snapshot.getValue(Rating.class);
+
+                    if(r.getFoodId().equals(foodId)){
+                        list.add(r);
+                    }
+                }
+                    adapter=new YorumlarAdapter(FoodDetail.this,list);
+                    yorumlarRecyler.setAdapter(adapter);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     private void getRatingFood(final String foodId) {
 
-        FirebaseDatabase.getInstance().getReference("Rating").child(foodId).addValueEventListener(new ValueEventListener() {
+          FirebaseDatabase.getInstance().getReference("Rating").child(foodId).addValueEventListener(new ValueEventListener() {
             int count=0;
             float sum=0;
             @RequiresApi(api = Build.VERSION_CODES.N)
