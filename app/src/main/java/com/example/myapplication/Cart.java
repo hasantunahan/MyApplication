@@ -26,12 +26,18 @@ import com.example.myapplication.Helper.RecyclerItemTouchHelper;
 import com.example.myapplication.Interface.RecyclerItemTouchHelperListener;
 import com.example.myapplication.Model.Order;
 import com.example.myapplication.Model.Request;
+import com.example.myapplication.Notification.Client;
+import com.example.myapplication.Notification.Data;
+import com.example.myapplication.Notification.MyResponse;
+import com.example.myapplication.Notification.Sender;
+import com.example.myapplication.Notification.Tokens;
 import com.example.myapplication.ViewHolder.CartAdapter;
 import com.example.myapplication.ViewHolder.CartViewHolder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.NumberFormat;
@@ -40,6 +46,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperListener {
 
@@ -62,6 +72,9 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
     private String firebaseAdres;
     private Spinner adresSpinner;
     private ArrayList<String> listAdres;
+
+    APIService apiService;
+    boolean notify=false;
 
     String key;
 
@@ -105,6 +118,9 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
 
         ItemTouchHelper.SimpleCallback simpleCallback=new RecyclerItemTouchHelper(0,ItemTouchHelper.LEFT,this);
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
+
+        apiService= Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+
 
         txtTotalPrice=(TextView) findViewById(R.id.total);
 
@@ -289,6 +305,14 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
 
                             new Database(getBaseContext()).clearChart();
                           //  Toast.makeText(Cart.this,"Teşekkürler,Adres eklendi",Toast.LENGTH_SHORT).show();
+
+                                System.out.println("gondercek");
+                                sendNotification("5438858037",Common.currentUser.getName(),String.valueOf(System.currentTimeMillis())+" nolu siparişiniz bulunmaktadır.");
+
+
+
+
+
                             finish();
                             epicdialog.dismiss();
 
@@ -337,6 +361,47 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
         });
 
 
+    }
+
+
+    private void sendNotification(final String receiver, final String username, final String message){
+        System.out.println("sendicinde");
+        DatabaseReference tokens=FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query=tokens.orderByKey().equalTo("5438858037");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for( DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Tokens tokens =snapshot.getValue(Tokens.class);
+                    Data data=new Data(Common.currentUser.getPhone(),R.mipmap.ic_launcher,username+":"+message,"Yeni Siparis","5438858037");
+                  //  System.out.println("karsi"+userid2);
+                    Sender sender=new Sender(data, tokens.getToken());
+
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                    if(response.code() ==200){
+                                        if(response.body().success!=1){
+                                            Toast.makeText(Cart.this, "Bildirim Hatasi", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
+
+                                }
+                            });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void loadListFood() {

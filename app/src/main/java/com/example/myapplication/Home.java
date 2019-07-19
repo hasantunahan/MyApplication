@@ -26,6 +26,7 @@ import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
 import com.example.myapplication.Interface.ItemClickListener;
 import com.example.myapplication.Model.Category;
+import com.example.myapplication.Notification.Tokens;
 import com.example.myapplication.ViewHolder.MenuViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -115,6 +116,15 @@ public class Home extends AppCompatActivity
             return;
         }
 
+      //  updateToken(FirebaseInstanceId.getInstance().getToken());
+
+
+    }
+
+    private void updateToken(String token){
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Tokens");
+        Tokens token1 = new Tokens(token);
+        reference.child(Common.currentUser.getPhone()).setValue(token1);
     }
 
     private void loadMenu() {

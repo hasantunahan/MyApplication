@@ -53,7 +53,9 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     TextView food_name,food_price,food_description,mRatingScale;
     ImageView food_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
-    FloatingActionButton btnCart;
+ //   FloatingActionButton btnCart;
+  Button btnCart;
+
     ElegantNumberButton numberButton;
     String foodId;
     FirebaseDatabase database;
@@ -76,7 +78,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
         epicdialog=new Dialog(FoodDetail.this,R.style.AppTheme_NoActionBar);
 
         numberButton = (ElegantNumberButton) findViewById(R.id.number_button);
-        btnCart= (FloatingActionButton) findViewById(R.id.btnCart);
+        btnCart=  findViewById(R.id.btnCart);
 
         btnRating=findViewById(R.id.btnRating);
         ratingBar=findViewById(R.id.ratingBar);
@@ -254,11 +256,11 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
                 Glide.with(getApplicationContext()).load(currentFood.getImage()).into(food_image);
 
 
-                collapsingToolbarLayout.setTitle(currentFood.getName());
+               // collapsingToolbarLayout.setTitle(currentFood.getName());
 
                 food_price.setText(currentFood.getPrice());
 
-                food_name.setText(currentFood.getName());
+                food_name.setText(currentFood.getName().toUpperCase());
 
                 food_description.setText(currentFood.getDescription());
 

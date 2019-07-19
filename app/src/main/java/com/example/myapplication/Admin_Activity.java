@@ -1,13 +1,15 @@
 package com.example.myapplication;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.myapplication.Common.Common;
+import com.example.myapplication.Notification.Tokens;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -39,6 +41,13 @@ public class Admin_Activity extends AppCompatActivity {
             }
         });
 ////////////şirketadi
+      //  updateToken(FirebaseInstanceId.getInstance().getToken());
 
+
+    }
+    private void updateToken(String token){
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Tokens");
+        Tokens token1 = new Tokens(token);
+        reference.child(Common.currentUser.getPhone()).setValue(token1);
     }
 }
