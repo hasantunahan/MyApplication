@@ -12,6 +12,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.example.myapplication.Database.Database;
 import com.example.myapplication.Model.Food;
 import com.example.myapplication.Model.Order;
 import com.example.myapplication.Model.Rating;
+import com.example.myapplication.ViewHolder.FoodAdapter;
 import com.example.myapplication.ViewHolder.YorumlarAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,8 +59,11 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     private int sum;
     private RecyclerView yorumlarRecyler;
     private ArrayList<Rating> list;
+    private ArrayList<Food> flist;
+    //FirebaseRecyclerAdapter<Food, FoodViewHolder> fadapter;
     private YorumlarAdapter adapter;
     private TextView yorumlarıGor;
+    private RecyclerView sizinicinRecyler;
     TextView food_name,food_price,food_description,mRatingScale;
     ImageView food_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -70,7 +75,11 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     DatabaseReference food;
     Food currentFood;
     private String key;
-
+    private String populerkey;
+    private String kisikey;
+    String keyim;
+     FoodAdapter fadapter;
+    private DatabaseReference foodList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +90,12 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
         food=database.getReference("Food");
         rating_ref=FirebaseDatabase.getInstance().getReference("Rating");
         list=new ArrayList<Rating>();
+        flist=new ArrayList<Food>();
+
+
+
+        foodList=database.getReference("Food");
+
         epicdialog=new Dialog(FoodDetail.this,R.style.AppTheme_NoActionBar);
         yorumlarıGor=findViewById(R.id.yorumlarıGör);
         numberButton = (ElegantNumberButton) findViewById(R.id.number_button);
@@ -90,6 +105,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
         ratingBar=findViewById(R.id.ratingBar);
         avgText=findViewById(R.id.avg);
 
+
         btnRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +114,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
         });
 
         yorumlarRecyler=findViewById(R.id.detailYorumlarRecycler);
+        sizinicinRecyler=findViewById(R.id.sizinicinRecyler);
 
         yorumlarıGor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +127,10 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
 
         yorumlarRecyler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2);
+        sizinicinRecyler.setLayoutManager(gridLayoutManager);
+
+
         reference= FirebaseDatabase.getInstance().getReference().child("Rating");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -118,6 +139,97 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
                     key=snapshot.getKey();
                     goster(key);
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        /*FirebaseDatabase.getInstance().getReference("Favori").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+         for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+             kisikey=snapshot.getKey();
+             System.out.println("kisikey"+kisikey);
+
+             FirebaseDatabase.getInstance().getReference("Favori").child(kisikey).addValueEventListener(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                     for( DataSnapshot snapshot1 : dataSnapshot.getChildren()){
+                         populerkey=snapshot1.getKey();
+                         populerlist(populerkey);
+                         //populer(populerkey);
+                         System.out.println("Populer key"+populerkey);
+                     }
+
+                 }
+                 @Override
+                 public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                 }
+             });
+
+         }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });*/
+
+        FirebaseDatabase.getInstance().getReference("Food").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            for (DataSnapshot snapshot :dataSnapshot.getChildren()){
+                keyim= snapshot.getKey();
+
+                FirebaseDatabase.getInstance().getReference("Rating").child(keyim).addValueEventListener(new ValueEventListener() {
+                    int count=0;
+                    float sum=0;
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                Rating r= snapshot.getValue(Rating.class);
+                                if(r.getFoodId().equals(foodId)){
+                                    count++;
+                                    sum += Float.parseFloat(r.getRateValues());
+                                }
+                            }
+                            if( count !=0){
+                                float avg=(sum/count);
+                                String x = new DecimalFormat("#,#0.0").format(avg);
+                                ratingBar.setRating(avg);
+                                avgText.setText(x+"");
+                                if(count >= 4 && avg > 4){
+                                    populerkey=dataSnapshot.getKey();
+                                    System.out.println("POPULERKEYYYYYYY"+populerkey);
+                                    populerlist(populerkey);
+                                }
+                            }
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
+            }
             }
 
             @Override
@@ -178,6 +290,45 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
 
 
     }
+
+    private void populerlist(final String populerkey) {
+
+        FirebaseDatabase.getInstance().getReference("Food").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+        if(dataSnapshot.exists()){
+
+
+
+        for (DataSnapshot snapshot  : dataSnapshot.getChildren()){
+            Food f= snapshot.getValue(Food.class);
+            if( snapshot.getKey().equals(populerkey)){
+                flist.add(f);
+            }
+
+            }
+           fadapter=new FoodAdapter( FoodDetail.this,flist);
+           sizinicinRecyler.setAdapter(fadapter);
+
+            }
+
+
+                }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
+
 
     private void goster(String key) {
 
