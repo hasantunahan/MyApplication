@@ -190,7 +190,7 @@
                         android:paddingTop="12dp"
                         android:paddingBottom="12dp"
                         android:text="Description"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/darker_gray"
                         android:textSize="14sp" />
 
                     <LinearLayout
