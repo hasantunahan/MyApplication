@@ -288,14 +288,14 @@ public class FoodList extends AppCompatActivity {
                     }
                 });
 
-                viewHolder.yorumlar_image.setOnClickListener(new View.OnClickListener() {
+                /*viewHolder.yorumlar_image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent=new Intent(FoodList.this,Yorumlar.class);
                         intent.putExtra("FoodId",adapter.getRef(position).getKey());
                         startActivity(intent);
                     }
-                });
+                });*/
 
 
 //likeeee
@@ -355,6 +355,7 @@ public class FoodList extends AppCompatActivity {
                                                 hashMap.put("name",model.getName());
                                                 hashMap.put("image",model.getImage());
                                                 hashMap.put("description",model.getDescription());
+                                                hashMap.put("foodId",model.getFoodId());
                                                 hashMap.put("price",model.getPrice());
                                                 hashMap.put("discount",model.getDiscount());
                                                 hashMap.put("menuId",model.getMenuId());
@@ -422,10 +423,8 @@ public class FoodList extends AppCompatActivity {
                                 viewHolder.yorumsayisi.setText("("+count+" yorum)");
                                 if(avg >=4){
                                     //iewHolder.kalitekontrol.setVisibility(View.VISIBLE);
-                                  viewHolder.layout.setVisibility(View.VISIBLE);
-                                  viewHolder.ratingStar.setVisibility(View.VISIBLE);
-                                  viewHolder.ratingOrt.setVisibility(View.VISIBLE);
                                   viewHolder.ratingOrt.setText(x);
+                                  viewHolder.ratingBarfoodlist.setRating(avg);
 
                                 }
                             }

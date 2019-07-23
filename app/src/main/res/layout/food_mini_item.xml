@@ -2,10 +2,10 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_width="160dp"
+    android:layout_height="270dp"
     android:layout_margin="10dp"
-    app:cardCornerRadius="25dp"
+    app:cardCornerRadius="5dp"
     app:cardElevation="4dp">
 
     <android.support.constraint.ConstraintLayout
@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/food_image"
+            android:id="@+id/mini_food_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
@@ -28,7 +28,7 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="85dp"
+            android:layout_height="120dp"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal"
             android:padding="5dp"
@@ -38,104 +38,52 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/food_name"
-                android:layout_width="263dp"
+                android:id="@+id/mini_food_name"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
 
+                android:layout_marginTop="4dp"
                 android:layout_weight="9"
                 android:background="#fff"
                 android:fontFamily="@font/kim"
                 android:padding="6dp"
                 android:text="Makaron Ismi"
                 android:textColor="#84B150"
-                android:textSize="15sp"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
-                android:id="@+id/priceFoodList"
-                android:layout_width="181dp"
+                android:id="@+id/mini_priceFoodList"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/kim"
                 android:padding="6dp"
                 android:text="Price"
                 android:textColor="#404040"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/food_name"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/food_name"
-                app:layout_constraintTop_toBottomOf="@+id/food_name"
-                app:layout_constraintVertical_bias="0.0" />
-
-
-            <LinearLayout
-                android:id="@+id/linearLayout3"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:orientation="horizontal"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/food_name"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mini_food_name" />
 
-                <ImageView
-                    android:id="@+id/fav"
-                    android:layout_width="29dp"
-                    android:layout_height="29dp"
-                    android:layout_weight="1"
-                    android:background="#fff"
-                    android:padding="3dp"
-                    android:tint="#404040"
-                    app:srcCompat="@drawable/ic_favorite_border_black_24dp"
-                    tools:layout_editor_absoluteX="303dp"
-                    tools:layout_editor_absoluteY="52dp" />
-
-                <ImageView
-                    android:id="@+id/shareFoodlist"
-                    android:layout_width="28dp"
-                    android:layout_height="29dp"
-                    android:layout_weight="1"
-                    android:background="#fff"
-                    android:padding="3dp"
-                    android:tint="#404040"
-                    app:srcCompat="@drawable/ic_menu_share"
-                    tools:layout_editor_absoluteX="281dp"
-                    tools:layout_editor_absoluteY="73dp" />
-
-                <ImageView
-                    android:id="@+id/sepeteEkleView"
-                    android:layout_width="29dp"
-                    android:layout_height="29dp"
-                    android:layout_weight="1"
-                    android:padding="3dp"
-                    android:tint="#404040"
-                    app:srcCompat="@drawable/ic_sepeteklesayacli"
-                    tools:layout_editor_absoluteX="347dp"
-                    tools:layout_editor_absoluteY="79dp" />
-
-
-            </LinearLayout>
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/ratingConstrait"
+                android:id="@+id/mini_ratingConstrait"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mini_priceFoodList">
 
 
                 <TextView
-                    android:id="@+id/ratingTextView"
+                    android:id="@+id/mini_ratingTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/kim"
@@ -147,27 +95,27 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <RatingBar
-                    android:id="@+id/ratingBarFoodd"
+                    android:id="@+id/mini_ratingBarFoodd"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
                     android:layout_marginLeft="2dp"
                     android:theme="@style/RatingBar"
-                    app:layout_constraintStart_toEndOf="@+id/ratingTextView"
+                    app:layout_constraintStart_toEndOf="@+id/mini_ratingTextView"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/yorumSayisiTextView"
+                    android:id="@+id/mini_yorumSayisiTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="2dp"
                     android:layout_marginLeft="2dp"
                     android:gravity="center"
                     android:text="(0 yorum)"
-                    android:textSize="12sp"
+                    android:textSize="8sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/ratingBarFoodd"
+                    app:layout_constraintStart_toEndOf="@+id/mini_ratingBarFoodd"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
@@ -190,8 +138,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/ic_favorite_black_24dp" />
-
-
 
 
     </android.support.constraint.ConstraintLayout>

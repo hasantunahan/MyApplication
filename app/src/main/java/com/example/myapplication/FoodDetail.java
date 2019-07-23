@@ -12,7 +12,6 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -67,7 +66,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     TextView food_name,food_price,food_description,mRatingScale;
     ImageView food_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
- //   FloatingActionButton btnCart;
+    // FloatingActionButton btnCart;
     Button btnCart;
     ElegantNumberButton numberButton;
     String foodId;
@@ -127,8 +126,8 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
 
         yorumlarRecyler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2);
-        sizinicinRecyler.setLayoutManager(gridLayoutManager);
+
+        sizinicinRecyler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
 
         reference= FirebaseDatabase.getInstance().getReference().child("Rating");
@@ -148,7 +147,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
         });
 
 
-        /*FirebaseDatabase.getInstance().getReference("Favori").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("Favori").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
          for (DataSnapshot snapshot : dataSnapshot.getChildren()){
@@ -182,61 +181,9 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
-
-        FirebaseDatabase.getInstance().getReference("Food").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            for (DataSnapshot snapshot :dataSnapshot.getChildren()){
-                keyim= snapshot.getKey();
-
-                FirebaseDatabase.getInstance().getReference("Rating").child(keyim).addValueEventListener(new ValueEventListener() {
-                    int count=0;
-                    float sum=0;
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()){
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                Rating r= snapshot.getValue(Rating.class);
-                                if(r.getFoodId().equals(foodId)){
-                                    count++;
-                                    sum += Float.parseFloat(r.getRateValues());
-                                }
-                            }
-                            if( count !=0){
-                                float avg=(sum/count);
-                                String x = new DecimalFormat("#,#0.0").format(avg);
-                                ratingBar.setRating(avg);
-                                avgText.setText(x+"");
-                                if(count >= 4 && avg > 4){
-                                    populerkey=dataSnapshot.getKey();
-                                    System.out.println("POPULERKEYYYYYYY"+populerkey);
-                                    populerlist(populerkey);
-                                }
-                            }
-
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-
-
-            }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
         });
+
+
 
 
 
@@ -245,7 +192,6 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
             @Override
             public void onClick(View v) {
                 new Database(getBaseContext()).addToChart(new Order(
-
 
                         foodId,
                         currentFood.getName(),

@@ -2,18 +2,19 @@ package com.example.myapplication.Model;
 
 public class Food {
 
-    private String name,image,description,price,discount,menuId;
+    private String name,image,description,price,discount,menuId,foodId;
 
     public Food() {
     }
 
-    public Food(String name, String image, String description, String price, String discount, String menuId) {
+    public Food(String name, String image, String description, String price, String discount, String menuId, String foodId) {
         this.name = name;
         this.image = image;
         this.description = description;
         this.price = price;
         this.discount = discount;
         this.menuId = menuId;
+        this.foodId = foodId;
     }
 
     public String getName() {
@@ -62,5 +63,13 @@ public class Food {
 
     public void setMenuId(String menuId) {
         this.menuId = menuId;
+    }
+
+    public String getFoodId() {
+        return foodId;
+    }
+
+    public void setFoodId(String foodId) {
+        this.foodId = foodId;
     }
 }

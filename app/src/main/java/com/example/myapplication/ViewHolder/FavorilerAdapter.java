@@ -1,6 +1,7 @@
 package com.example.myapplication.ViewHolder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,8 +14,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
-import com.example.myapplication.Favoriler;
-import com.example.myapplication.FoodList;
+import com.example.myapplication.FoodDetail;
 import com.example.myapplication.Model.Food;
 import com.example.myapplication.Model.Order;
 import com.example.myapplication.R;
@@ -23,9 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class FavorilerAdapter extends RecyclerView.Adapter<FavorilerAdapter.MyViewHolder> {
 
@@ -108,6 +106,16 @@ public class FavorilerAdapter extends RecyclerView.Adapter<FavorilerAdapter.MyVi
             price=itemview.findViewById(R.id.fav_price);
             food_image=itemview.findViewById(R.id.fav_iamge);
             sepetEkleImage=itemview.findViewById(R.id.fav_speteEkle);
+
+            itemview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent= new Intent ( context, FoodDetail.class);
+                    intent.putExtra("FoodId",list.get(getAdapterPosition()).getFoodId());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
 
         }
     }
