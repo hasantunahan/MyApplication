@@ -51,11 +51,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/cartImage"
-            android:layout_width="59dp"
-            android:layout_height="59dp"
-            android:src="@drawable/ic_macaron_svgrepo" />
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            app:srcCompat="@drawable/ic_macaron_svgrepo" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -70,9 +72,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:fontFamily="@font/kim"
                 android:gravity="center_vertical|start"
                 android:text="Food 01"
                 android:textAllCaps="true"
+                android:textColor="#2e2e2e"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -80,10 +85,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:fontFamily="@font/kim"
                 android:gravity="center_vertical|start"
                 android:text="100,000"
                 android:textAllCaps="true"
-                android:textStyle="italic" />
+                android:textColor="#FFCA28"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
@@ -91,13 +98,13 @@
 
         <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
             android:id="@+id/btn_quantity"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="38dp"
             android:layout_margin="10dp"
             app:backGroundColor="#84B150"
             app:finalNumber="20"
             app:initialNumber="1"
-            app:textSize="7sp"></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+            app:textSize="6sp"></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 
 
     </LinearLayout>

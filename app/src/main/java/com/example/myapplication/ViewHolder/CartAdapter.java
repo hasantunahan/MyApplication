@@ -2,24 +2,23 @@ package com.example.myapplication.ViewHolder;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
+import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.myapplication.Cart;
-import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
-import com.example.myapplication.Interface.ItemClickListener;
+import com.example.myapplication.Model.Food;
 import com.example.myapplication.Model.Order;
 import com.example.myapplication.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -33,11 +32,14 @@ public class CartAdapter extends  RecyclerView.Adapter<CartViewHolder>{
 
     private List<Order> listData=new ArrayList<>();
     private Cart cart;
+    private Context context;
     int price;
+    String [] url=new String[50];
 
-    public CartAdapter(List<Order> listData, Cart cart) {
+    public CartAdapter(List<Order> listData, Cart cart,Context c) {
         this.listData = listData;
         this.cart = cart;
+        this.context=c;
     }
 
     @NonNull
@@ -86,6 +88,26 @@ public class CartAdapter extends  RecyclerView.Adapter<CartViewHolder>{
 
 
 
+
+            }
+        });
+
+
+        FirebaseDatabase.getInstance().getReference("Food").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for ( DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Food f=snapshot.getValue(Food.class);
+                    if(snapshot.getKey().equals(listData.get(position).getProductId())){
+                        url[position]=f.getImage().toString();
+                        Glide.with(context).load(url[position]).into(cartViewHolder.cartimage);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });

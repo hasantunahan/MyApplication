@@ -23,6 +23,7 @@ import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
 import com.example.myapplication.Helper.RecyclerItemTouchHelper;
 import com.example.myapplication.Interface.RecyclerItemTouchHelperListener;
+import com.example.myapplication.Model.Food;
 import com.example.myapplication.Model.Order;
 import com.example.myapplication.Model.Request;
 import com.example.myapplication.Notification.Client;
@@ -71,6 +72,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
     private String firebaseAdres;
     private Spinner adresSpinner;
     private ArrayList<String> listAdres;
+    private ImageView cartimage;
 
     APIService apiService;
     boolean notify=false;
@@ -107,6 +109,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
         adresid=UUID.randomUUID().toString();
         nlist=new ArrayList<>();
         listAdres=new ArrayList<>();
+        cartimage=findViewById(R.id.cartImage);
 
         //adresSpinner=findViewById(R.id.spinnerAdres);
 
@@ -406,10 +409,35 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
     private void loadListFood() {
 
         cart=new Database(this).getCarts();
-        adapter=new CartAdapter(cart,this);
+        adapter=new CartAdapter(cart,this,getApplicationContext());
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
+        final String [] id= new String[cart.size()];
+        for (int i=0; i<cart.size();i++){
 
+            final int finalI = i;
+            final int finalI1 = i;
+            FirebaseDatabase.getInstance().getReference("Food").orderByChild("foodID").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        Food f=snapshot.getValue(Food.class);
+                        if(snapshot.getKey().equals(cart.get(finalI1).getProductId())){
+                            id[finalI]=f.getImage().toString();
+                            System.out.println("foodurl"+id[finalI]);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+
+        }
 
 
         int total=0;
