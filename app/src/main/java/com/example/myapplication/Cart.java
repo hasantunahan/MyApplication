@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,7 +91,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
     List<Order> cart=new ArrayList<>();
     CartAdapter adapter;
 
-    RelativeLayout rootLayout;
+    ConstraintLayout rootLayout;
 
 
     @Override
@@ -128,7 +127,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
 
         btnPlace=(Button) findViewById(R.id.btnPlaceOrder);
 
-        rootLayout=(RelativeLayout)findViewById(R.id.rootLayout);
+        rootLayout=findViewById(R.id.rootLayout);
 
        FirebaseDatabase.getInstance().getReference("Adres").child(Common.currentUser.getName()).addValueEventListener(new ValueEventListener() {
            @Override
