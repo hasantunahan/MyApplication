@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andremion.counterfab.CounterFab;
+import com.bumptech.glide.Glide;
 import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
 import com.example.myapplication.Interface.ItemClickListener;
@@ -31,7 +33,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +51,8 @@ public class FoodList extends AppCompatActivity {
     String categoryId="";
     private int begenisayisi;
     private String foodidKey;
+    private ImageView searchImage;
+
 
     FirebaseRecyclerAdapter<Food, FoodViewHolder> adapter;
 
@@ -72,6 +75,14 @@ public class FoodList extends AppCompatActivity {
         //categori ismi icin
         urunlistesi_ismi=findViewById(R.id.urunlistesi);
         geriButton=findViewById(R.id.geriFoodlist);
+        searchImage=findViewById(R.id.searcImage);
+
+        searchImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setVisibility(View.VISIBLE);
+            }
+        });
 
         intent=getIntent();
         String kategori_ismi=intent.getStringExtra("kategori_ismi");
@@ -112,6 +123,7 @@ public class FoodList extends AppCompatActivity {
 
         searchView=(MaterialSearchBar) findViewById(R.id.searchBar);
         searchView.setHint("Buradan arayabilirsiniz");
+        searchView.setTextColor(Color.BLUE); // set the text color
 
         fab = (CounterFab) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -189,8 +201,8 @@ public class FoodList extends AppCompatActivity {
               /*  Picasso.with(getBaseContext()).load(model.getImage())
                         .into(viewHolder.food_image);*/
 
-             Picasso.get().load(model.getImage()).resize(100,100).centerCrop().into(viewHolder.food_image);
-                 //    Glide.with(getApplicationContext()).load(model.getImage()).into(viewHolder.food_image);
+            // Picasso.get().load(model.getImage()).resize(100,100).centerCrop().into(viewHolder.food_image);
+             Glide.with(getApplicationContext()).load(model.getImage()).into(viewHolder.food_image);
 
                 final Food local=model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
@@ -242,11 +254,11 @@ public class FoodList extends AppCompatActivity {
                /* Picasso.with(getBaseContext()).load(model.getImage())
                         .into(viewHolder.food_image);*/
 
-               //Glide.with(FoodList.this).load(model.getImage()).into(viewHolder.food_image);
+               Glide.with(FoodList.this).load(model.getImage()).into(viewHolder.food_image);
 
                // Picasso.get().load(model.getImage()).resize(100,100).centerCrop().into(viewHolder.food_image);
 
-                Picasso.get().load(model.getImage()).resize(1000,1000).centerCrop().into(viewHolder.food_image);
+                //Picasso.get().load(model.getImage()).resize(1000,1000).centerCrop().into(viewHolder.food_image);
 
                 viewHolder.sepet_image.setOnClickListener(new View.OnClickListener() {
                     @Override

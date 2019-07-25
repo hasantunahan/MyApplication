@@ -48,21 +48,22 @@
         android:id="@+id/barr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FD7D83">
+        android:background="#fff">
 
         <com.mancj.materialsearchbar.MaterialSearchBar
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="8dp"
             android:lineSpacingMultiplier="1.5"
             android:padding="9dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/urunlistesi"
             app:mt_hint="Buradan arayabilirsiniz"
+            app:mt_placeholder="..."
+            app:mt_placeholderColor="#707070"
             app:mt_speechMode="false" />
 
         <ImageView
@@ -75,7 +76,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:src="@drawable/ic_backk"
-            android:tint="@color/white"
+            android:tint="#707070"
             app:layout_constraintEnd_toStartOf="@+id/searchBar"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,12 +96,66 @@
             android:gravity="center"
             android:padding="4dp"
             android:text="ÜRÜNLER"
-            android:textColor="#fff"
+            android:textColor="#2e2e2e"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.431"
             app:layout_constraintStart_toEndOf="@+id/geriFoodlist"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/searcImage"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="29dp"
+            android:tint="#707070"
+            app:layout_constraintBottom_toTopOf="@+id/searchBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_search_black_24dp" />
+
+        <Button
+            android:id="@+id/siralabuton"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="#fff"
+            android:drawableLeft="@drawable/ic_sort_52px"
+            android:fontFamily="@font/kim"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Sırala"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchBar" />
+
+        <Button
+            android:id="@+id/filtrelebutton"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:elevation="2dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="#fff"
+            android:drawableLeft="@drawable/ic_filter_52px"
+            android:fontFamily="@font/kim"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:text="Filtrele"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.071"
+            app:layout_constraintStart_toEndOf="@+id/siralabuton"
+            app:layout_constraintTop_toBottomOf="@+id/searchBar" />
+
 
     </android.support.constraint.ConstraintLayout>
 

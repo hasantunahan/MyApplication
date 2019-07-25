@@ -22,9 +22,14 @@ import android.widget.Toast;
 
 import com.andremion.counterfab.CounterFab;
 import com.bumptech.glide.Glide;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
 import com.example.myapplication.Interface.ItemClickListener;
+import com.example.myapplication.Model.Banner;
 import com.example.myapplication.Model.Category;
 import com.example.myapplication.Notification.Tokens;
 import com.example.myapplication.ViewHolder.MenuViewHolder;
@@ -32,8 +37,11 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.HashMap;
@@ -58,6 +66,9 @@ public class Home extends AppCompatActivity
 
     FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter;
 
+    private HashMap<String,String> imageList;
+    private SliderLayout mSlider;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +78,13 @@ public class Home extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        toolbar.setTitle("MACARONLAR");
+        toolbar.setTitle("");
+
+
+        // ortalamk için uğraşş
+
+
+
         setSupportActionBar(toolbar);
 
         //firebase
@@ -105,7 +122,7 @@ public class Home extends AppCompatActivity
         //menü
         recycler_menu=(RecyclerView)findViewById(R.id.recycler_menu);
         recycler_menu.setHasFixedSize(true);
-        layoutManager=new LinearLayoutManager(this);
+        layoutManager=new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         recycler_menu.setLayoutManager(layoutManager);
 
         if(Common.isConnectedToInternet(this))
@@ -118,8 +135,65 @@ public class Home extends AppCompatActivity
 
       //  updateToken(FirebaseInstanceId.getInstance().getToken());
 
+        slider();
 
     }
+
+    private void slider() {
+
+        mSlider=findViewById(R.id.slider);
+        imageList=new HashMap<>();
+
+        final DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Banner");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for ( DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Banner banner= snapshot.getValue(Banner.class);
+                    imageList.put(banner.getName()+"@@@"+banner.getId(),banner.getImage());
+                }
+                for(String keyi:imageList.keySet()){
+                    String[] keySplit =keyi.split("@@@");
+                String nameFood= keySplit[0];
+                String idofFoof= keySplit[1];
+
+                    final TextSliderView textSliderView= new TextSliderView(getBaseContext());
+                    textSliderView.description(nameFood)
+                            .image(imageList.get(keyi))
+                            .setScaleType(BaseSliderView.ScaleType.CenterCrop)
+                            .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                @Override
+                                public void onSliderClick(BaseSliderView slider) {
+                                   Intent intent=new Intent(Home.this,FoodDetail.class);
+                                   intent.putExtras(textSliderView.getBundle());
+                                   startActivity(intent);
+                                }
+                            });
+
+                    textSliderView.bundle(new Bundle());
+                    textSliderView.getBundle().putString("FoodId",idofFoof);
+                    mSlider.addSlider(textSliderView);
+
+                    ref.removeEventListener(this);
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });//ref
+
+        mSlider.setPresetTransformer(SliderLayout.Transformer.Background2Foreground);
+        mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mSlider.setCustomAnimation(new DescriptionAnimation());
+        mSlider.setDuration(4000);
+
+    }//sliderdunction
 
     private void updateToken(String token){
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Tokens");
@@ -129,7 +203,7 @@ public class Home extends AppCompatActivity
 
     private void loadMenu() {
 
-         adapter=new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class,R.layout.menu_item,MenuViewHolder.class,category) {
+         adapter=new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class,R.layout.menu_item,MenuViewHolder.class,category.orderByChild("name")) {
             @Override
             protected void populateViewHolder(@NonNull MenuViewHolder viewHolder,@NonNull final Category model, int position) {
                 viewHolder.txtMenuName.setText(model.getName());
@@ -170,12 +244,8 @@ public class Home extends AppCompatActivity
         };
 
         //recycler_menu.setAdapter(adapter);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        linearLayoutManager.scrollToPosition(0);
         adapter.startListening();
         recycler_menu.setAdapter(adapter);
-        recycler_menu.setLayoutManager(linearLayoutManager);
 
 
     }
@@ -319,5 +389,11 @@ public class Home extends AppCompatActivity
         super.onResume();
         fab.setCount(new Database(this).getCountCart());
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mSlider.stopAutoCycle();
     }
 }

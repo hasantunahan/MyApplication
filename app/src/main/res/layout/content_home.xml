@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Home"
     tools:showIn="@layout/app_bar_home">
@@ -28,15 +29,59 @@
         app:layout_constraintTop_toTopOf="parent" />-->
 
 
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/recycler_menu"
+  <com.daimajia.slider.library.SliderLayout
+      android:id="@+id/slider"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:scrollbars="vertical"
-      app:layout_constraintBottom_toBottomOf="parent"
+      android:layout_height="200dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
+      app:layout_constraintTop_toTopOf="parent"/>
+
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recycler_menu"
+      android:layout_width="0dp"
+      android:layout_height="242dp"
+      android:layout_marginTop="4dp"
+      android:paddingTop="10dp"
+      android:scrollbars="vertical"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textView3">
 
   </android.support.v7.widget.RecyclerView>
+
+  <TextView
+      android:id="@+id/textView3"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="12dp"
+      android:layout_marginLeft="12dp"
+      android:layout_marginTop="12dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginRight="8dp"
+      android:fontFamily="@font/kim"
+      android:text="Kategoriler"
+      android:textColor="@android:color/black"
+      android:textSize="16sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/slider" />
+
+  <TextView
+      android:id="@+id/textView5"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="12dp"
+      android:layout_marginLeft="12dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginRight="8dp"
+      android:fontFamily="@font/kim"
+      android:text="En çok tercih edilenler"
+      android:textColor="@android:color/black"
+      android:textSize="16sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/recycler_menu" />
 </android.support.constraint.ConstraintLayout>

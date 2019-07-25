@@ -46,7 +46,7 @@ public class FavorilerAdapter extends RecyclerView.Adapter<FavorilerAdapter.MyVi
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int i) {
 
         myViewHolder.name.setText(list.get(i).getName().toUpperCase());
-        myViewHolder.price.setText(list.get(i).getPrice());
+        myViewHolder.price.setText(list.get(i).getPrice()+"₺");
         Glide.with(context).load(list.get(i).getImage()).into(myViewHolder.food_image);
 
         FirebaseDatabase.getInstance().getReference("Favori").child(Common.currentUser.getName()).addValueEventListener(new ValueEventListener() {

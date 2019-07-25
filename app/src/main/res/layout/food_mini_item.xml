@@ -114,6 +114,7 @@
                     android:gravity="center"
                     android:text="(0 yorum)"
                     android:textSize="8sp"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/mini_ratingBarFoodd"
                     app:layout_constraintTop_toTopOf="parent" />

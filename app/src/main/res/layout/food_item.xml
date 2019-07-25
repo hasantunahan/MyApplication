@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="25dp"
-    app:cardElevation="4dp">
+    android:layout_margin="0dp"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:layout_height="85dp"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal"
-            android:padding="5dp"
+            android:padding="2dp"
             android:weightSum="10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -172,26 +172,19 @@
 
             </android.support.constraint.ConstraintLayout>
 
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="300dp"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginLeft="13dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
 
         </android.support.constraint.ConstraintLayout>
-
-        <ImageView
-            android:id="@+id/kalitekontrol"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:clickable="true"
-            android:tint="#FFF55C63"
-            android:visibility="gone"
-            app:backgroundTint="@android:color/white"
-            app:layout_constraintBottom_toTopOf="@+id/food_image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_favorite_black_24dp" />
-
-
 
 
     </android.support.constraint.ConstraintLayout>

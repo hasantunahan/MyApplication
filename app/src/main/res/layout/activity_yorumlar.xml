@@ -10,7 +10,8 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#FD7D83"
+        android:background="#fff"
+        android:elevation="1dp"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,13 +19,13 @@
 
         <ImageView
             android:id="@+id/geriButtonyorum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:tint="@color/white"
+            android:tint="#707070"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,12 +43,13 @@
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/kim"
             android:text="YORUMLAR"
-            android:textColor="@color/white"
-            android:textSize="18dp"
+            android:textColor="#2e2e2e"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6" />
     </android.support.constraint.ConstraintLayout>
 
 
