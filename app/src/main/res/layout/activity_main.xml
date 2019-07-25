@@ -4,50 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/macaroonnnn"
+    android:background="@drawable/macaronbackground"
     tools:context=".MainActivity">
 
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-android:gravity="center"
         android:layout_centerInParent="true"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="400dp"
+        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/logoImage"
-            android:layout_width="415dp"
-            android:layout_height="300dp"
-            android:src="@drawable/macaroonslogo" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ttk"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="TTK Macaroons"
+            android:textColor="#2e2e2e"
+            android:textSize="36dp" />
 
-            android:id="@+id/txtSlogan"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/playball"
             android:gravity="center"
-            android:padding="15dp"
-            android:text="@string/slogan"
-            android:textColor="#2e2e2e"
-            android:textSize="14sp" />
+            android:text="Canın ne zaman isterse!"
+            android:textColor="#707070"
 
+            android:textSize="22sp" />
     </LinearLayout>
 
     <Button
         android:id="@+id/btnSignUp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="8dp"
@@ -60,10 +65,9 @@ android:gravity="center"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/infoText"
-        app:layout_constraintVertical_bias="0.07"
+        app:layout_constraintVertical_bias="0.0"
         app:met_baseColor="@android:color/white"
         app:met_floatingLabel="highlight"
         app:met_maxCharacters="11"
@@ -72,11 +76,11 @@ android:gravity="center"
 
     <TextView
         android:id="@+id/infoText"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:fontFamily="@font/kim"
@@ -85,24 +89,23 @@ android:gravity="center"
         android:textColor="#707070"
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
 
 
     <Button
         android:id="@+id/btnSignIn"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:background="#E04783"
+        android:background="#58453F"
         android:fontFamily="@font/kim"
         android:padding="15dp"
         android:text="GIRIS YAP"

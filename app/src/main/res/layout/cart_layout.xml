@@ -55,7 +55,7 @@
             android:id="@+id/cartImage"
             android:layout_width="59dp"
             android:layout_height="59dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_macaron_svgrepo" />
 
         <LinearLayout
             android:layout_width="0dp"
