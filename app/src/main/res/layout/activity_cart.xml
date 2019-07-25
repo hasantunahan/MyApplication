@@ -29,9 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
-android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:cardBackgroundColor="#2e2e2e"
+        app:cardBackgroundColor="#fff"
+        android:elevation="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -55,7 +54,7 @@ android:layout_marginLeft="8dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/kim"
                     android:text="Toplam:"
-                    android:textColor="@android:color/white"
+                    android:textColor="#2e2e2e"
                     android:textSize="20sp" />
 
                 <TextView
@@ -65,7 +64,7 @@ android:layout_marginLeft="8dp"
                     android:layout_marginLeft="6dp"
                     android:fontFamily="@font/kim"
                     android:text="$10,000"
-                    android:textColor="@android:color/white"
+                    android:textColor="#2e2e2e"
                     android:textSize="24sp" />
 
             </LinearLayout>
@@ -85,11 +84,11 @@ android:layout_marginLeft="8dp"
                 android:layout_marginEnd="44dp"
                 android:layout_marginRight="44dp"
                 android:layout_marginBottom="10dp"
-                android:background="@android:color/white"
+                android:background="@color/appYesil"
                 android:fontFamily="@font/kim"
 
                 android:text="Sipariş Ver"
-                android:textColor="#2e2e2e"
+                android:textColor="#fff"
                 android:textColorHint="@android:color/white"
                 android:textSize="16sp"
                 app:met_baseColor="@android:color/white"
