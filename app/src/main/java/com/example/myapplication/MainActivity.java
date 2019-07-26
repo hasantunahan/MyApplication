@@ -7,11 +7,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 
 
     Button btnSignIn,btnSignUp;
     TextView txtSlogan;
+
+    private FirebaseAuth mAuth;
+    //  private ProgressDialog progressDialog;
+    private FirebaseUser fUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +30,13 @@ public class MainActivity extends AppCompatActivity {
         btnSignIn=(Button) findViewById(R.id.btnSignIn);
         btnSignUp=(Button) findViewById(R.id.btnSignUp);
 
+        fUser= FirebaseAuth.getInstance().getCurrentUser();
+        if(fUser != null){
+            Intent intent=new Intent(MainActivity.this,Home.class);
+            startActivity(intent);
+            finish();
+        }
+
         //txtSlogan=(TextView) findViewById(R.id.txtSlogan);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
@@ -31,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                Intent signIn=new Intent(MainActivity.this,SignIn.class);
+                Intent signIn=new Intent(MainActivity.this,LoginEkran.class);
                 startActivity(signIn);
 
             }
@@ -41,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent signUp=new Intent(MainActivity.this,SignUp.class);
+                Intent signUp=new Intent(MainActivity.this,KayitOlEkran.class);
                 startActivity(signUp);
 
             }
@@ -49,5 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 
 }

@@ -1,6 +1,6 @@
 package com.example.myapplication.Notification;
 
-import com.example.myapplication.Common.Common;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -23,7 +23,7 @@ public class MyFirebaseIdService extends FirebaseInstanceIdService {
       //  FirebaseUser fuser=FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Tokens");
         Tokens tokens =new Tokens(refreshToken);
-        reference.child(Common.currentUser.getPhone()).setValue(tokens);
+        reference.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(tokens);
         System.out.println("tokens olusturuldu");
 
     }

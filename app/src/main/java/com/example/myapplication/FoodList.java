@@ -27,6 +27,7 @@ import com.example.myapplication.Model.Order;
 import com.example.myapplication.Model.Rating;
 import com.example.myapplication.ViewHolder.FoodViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -337,11 +338,10 @@ public class FoodList extends AppCompatActivity {
 
                 ////fav_basla
 
-
                 //viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
                                 final DatabaseReference fav_Ref=FirebaseDatabase.getInstance().getReference("Favori");
 
-                                fav_Ref.child(Common.currentUser.getName()).child(adapter.getRef(position).getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                fav_Ref.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child(adapter.getRef(position).getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if( dataSnapshot.exists()){
@@ -359,7 +359,7 @@ public class FoodList extends AppCompatActivity {
                             viewHolder.fav_image.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    fav_Ref.child(Common.currentUser.getName()).child(adapter.getRef(position).getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    fav_Ref.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child(adapter.getRef(position).getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             if(!dataSnapshot.exists()){
@@ -372,7 +372,7 @@ public class FoodList extends AppCompatActivity {
                                                 hashMap.put("discount",model.getDiscount());
                                                 hashMap.put("menuId",model.getMenuId());
                                                 DatabaseReference reference2=FirebaseDatabase.getInstance().getReference("Favori");
-                                                reference2.child(Common.currentUser.getName()).child(adapter.getRef(position).getKey()).setValue(hashMap);
+                                                reference2.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child(adapter.getRef(position).getKey()).setValue(hashMap);
                                                 viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
                                                 Toast.makeText(FoodList.this, "Favorilere eklendi", Toast.LENGTH_SHORT).show();
                                                 Intent intent=new Intent(FoodList.this,Favoriler.class);
@@ -380,7 +380,7 @@ public class FoodList extends AppCompatActivity {
                                                // startActivity(intent);
 
                                             }else{
-                                                fav_Ref.child(Common.currentUser.getName()).child(adapter.getRef(position).getKey()).removeValue();
+                                                fav_Ref.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child(adapter.getRef(position).getKey()).removeValue();
                                                 viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_border_black_24dp);
                                                 Toast.makeText(FoodList.this, "Favorilerden silindi", Toast.LENGTH_SHORT).show();
                                             }

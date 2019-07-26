@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,7 +63,7 @@ public class Home extends AppCompatActivity
     TextView txtFullName;
 
     CounterFab fab;
-
+   FirebaseAuth auth;
     RecyclerView recycler_menu;
     RecyclerView.LayoutManager layoutManager;
 
@@ -68,6 +71,7 @@ public class Home extends AppCompatActivity
 
     private HashMap<String,String> imageList;
     private SliderLayout mSlider;
+    private ImageView homeuser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,13 +115,25 @@ public class Home extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        homeuser=findViewById(R.id.home_user);
+
+        homeuser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(Home.this, Profil.class);
+                startActivity(intent);
+            }
+        });
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
 
         //kullanıcı adı
         View headerView=navigationView.getHeaderView(0);
         txtFullName=(TextView) headerView.findViewById(R.id.txtFullName);
-        txtFullName.setText(Common.currentUser.getName());
+        txtFullName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
         //menü
         recycler_menu=(RecyclerView)findViewById(R.id.recycler_menu);
@@ -299,9 +315,13 @@ public class Home extends AppCompatActivity
         }else if (id==R.id.nav_log_out) {
 
 
-            Intent signIn=new Intent(Home.this,SignIn.class);
-            signIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(signIn);
+            FirebaseAuth.getInstance().signOut();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
 
         }else if(id==R.id.nav_change_pwd){
             showChangePasswordDialog();

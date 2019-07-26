@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import com.example.myapplication.Cart;
-import com.example.myapplication.Common.Common;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -33,8 +33,8 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
        // FirebaseUser fuser= FirebaseAuth.getInstance().getCurrentUser();
 
-        if( Common.currentUser.getPhone() != null &&
-                sented.equals(Common.currentUser.getPhone())
+        if( FirebaseAuth.getInstance().getCurrentUser().getDisplayName() != null &&
+                sented.equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())
         ){
 
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){

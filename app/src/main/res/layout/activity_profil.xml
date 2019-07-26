@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context=".Profil">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:elevation="1dp"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/geriButtonprofil"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:tint="#707070"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_backk" />
+
+        <TextView
+            android:id="@+id/profiller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/kim"
+            android:text="PROFIL"
+            android:textColor="#2e2e2e"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6" />
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/photoProfilImageView"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:elevation="3dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:srcCompat="@drawable/photochange" />
+
+    <Button
+        android:id="@+id/kaydetButtonProfil"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buton_yesil"
+        android:drawableLeft="@drawable/ic_ok"
+        android:fontFamily="@font/kim"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:text="Kaydet"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/photoProfilImageView"
+        app:layout_constraintStart_toStartOf="@+id/photoProfilImageView"
+        app:layout_constraintTop_toBottomOf="@+id/photoProfilImageView" />
+
+    <Button
+        android:id="@+id/isimkaydetButtonProfil"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buton_yesil"
+        android:drawableLeft="@drawable/ic_ok"
+        android:fontFamily="@font/kim"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:text="Kaydet"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/profilName"
+        app:layout_constraintStart_toStartOf="@+id/profilName"
+        app:layout_constraintTop_toBottomOf="@+id/profilName" />
+
+    <EditText
+        android:id="@+id/profilName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:fontFamily="@font/kim"
+        android:inputType="textPersonName"
+        android:text="isim degistir"
+        app:layout_constraintEnd_toEndOf="@+id/kaydetButtonProfil"
+        app:layout_constraintStart_toStartOf="@+id/kaydetButtonProfil"
+        app:layout_constraintTop_toBottomOf="@+id/kaydetButtonProfil" />
+
+</android.support.constraint.ConstraintLayout>

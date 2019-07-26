@@ -9,9 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.myapplication.Common.Common;
 import com.example.myapplication.Model.Food;
 import com.example.myapplication.ViewHolder.FavorilerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +32,7 @@ public class Favoriler extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favoriler);
         recyclerView=findViewById(R.id.fav_recyler);
-        reference= FirebaseDatabase.getInstance().getReference("Favori").child(Common.currentUser.getName());
+        reference= FirebaseDatabase.getInstance().getReference("Favori").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         list=new ArrayList<Food>();
 

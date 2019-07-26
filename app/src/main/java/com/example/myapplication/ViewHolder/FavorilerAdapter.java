@@ -12,12 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
 import com.example.myapplication.FoodDetail;
 import com.example.myapplication.Model.Food;
 import com.example.myapplication.Model.Order;
 import com.example.myapplication.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -49,7 +49,7 @@ public class FavorilerAdapter extends RecyclerView.Adapter<FavorilerAdapter.MyVi
         myViewHolder.price.setText(list.get(i).getPrice()+"₺");
         Glide.with(context).load(list.get(i).getImage()).into(myViewHolder.food_image);
 
-        FirebaseDatabase.getInstance().getReference("Favori").child(Common.currentUser.getName()).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("Favori").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 foodid= dataSnapshot.getKey();

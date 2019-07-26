@@ -30,6 +30,7 @@ import com.example.myapplication.Model.Order;
 import com.example.myapplication.Model.Rating;
 import com.example.myapplication.ViewHolder.FoodAdapter;
 import com.example.myapplication.ViewHolder.YorumlarAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -77,6 +78,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     private String populerkey;
     private String kisikey;
     String keyim;
+    private String currentName;
      FoodAdapter fadapter;
     private DatabaseReference foodList;
     @Override
@@ -130,6 +132,21 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
         sizinicinRecyler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
 
+        FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    currentName=dataSnapshot.getValue().toString();
+                    System.out.println("Current"+currentName);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         reference= FirebaseDatabase.getInstance().getReference().child("Rating");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -145,6 +162,8 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
 
             }
         });
+
+
 
 
         FirebaseDatabase.getInstance().getReference("Favori").addValueEventListener(new ValueEventListener() {
@@ -441,23 +460,24 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
     @Override
     public void onPositiveButtonClicked(int i, @NotNull String s) {
 
+
         final Rating rating=new Rating(
-                Common.currentUser.getPhone(),
-                Common.currentUser.getName(),
+                FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),
+                currentName,
                 foodId,
                 String.valueOf(i),
                 s,
                 String.valueOf(System.currentTimeMillis())
         );
 
-        rating_ref.child(Common.currentUser.getPhone()).child(foodId).addValueEventListener(new ValueEventListener() {
+        rating_ref.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child(foodId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-             if(dataSnapshot.child(Common.currentUser.getPhone()).child(foodId).exists()){
-                 rating_ref.child(foodId).child(Common.currentUser.getPhone()).removeValue();
-                 rating_ref.child(foodId).child(Common.currentUser.getPhone()).setValue(rating);
+             if(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child(foodId).exists()){
+                 rating_ref.child(foodId).child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).removeValue();
+                 rating_ref.child(foodId).child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(rating);
              }else{
-                 rating_ref.child(foodId).child(Common.currentUser.getPhone()).setValue(rating);
+                 rating_ref.child(foodId).child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(rating);
              }
                 Toast.makeText(FoodDetail.this, "Derecelendirginiz icin tesekkürler", Toast.LENGTH_SHORT).show();
 

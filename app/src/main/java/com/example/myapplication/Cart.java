@@ -19,7 +19,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
 import com.example.myapplication.Helper.RecyclerItemTouchHelper;
 import com.example.myapplication.Interface.RecyclerItemTouchHelperListener;
@@ -33,6 +32,7 @@ import com.example.myapplication.Notification.Sender;
 import com.example.myapplication.Notification.Tokens;
 import com.example.myapplication.ViewHolder.CartAdapter;
 import com.example.myapplication.ViewHolder.CartViewHolder;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -92,6 +92,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
 
     List<Order> cart=new ArrayList<>();
     CartAdapter adapter;
+    private String currentName;
 
     ConstraintLayout rootLayout;
 
@@ -123,6 +124,20 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
 
         apiService= Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
+        FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    currentName=dataSnapshot.getValue().toString();
+                    System.out.println("Current"+currentName);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         txtTotalPrice=(TextView) findViewById(R.id.total);
 
@@ -132,7 +147,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
 
         rootLayout=findViewById(R.id.rootLayout);
 
-       FirebaseDatabase.getInstance().getReference("Adres").child(Common.currentUser.getName()).addValueEventListener(new ValueEventListener() {
+       FirebaseDatabase.getInstance().getReference("Adres").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).addValueEventListener(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
            if(!dataSnapshot.exists()){
@@ -140,7 +155,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
                hashMap.put("Adres","");
 
                DatabaseReference reference2=FirebaseDatabase.getInstance().getReference("Adres");
-               reference2.child(Common.currentUser.getName()).setValue(hashMap);
+               reference2.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(hashMap);
            }
            }
 
@@ -235,7 +250,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
         adresListesi=epicdialog.findViewById(R.id.adresListesiSpinner);
         hosgeldinizKisisi=epicdialog.findViewById(R.id.siparisTamamlaKisiAdi);
 
-        hosgeldinizKisisi.setText(Common.currentUser.getName());
+        hosgeldinizKisisi.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         //// Kapatma
         kapat.setOnClickListener(new View.OnClickListener() {
@@ -255,7 +270,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
 
 
 
-        FirebaseDatabase.getInstance().getReference("Adres").child(Common.currentUser.getName()).child("Adres").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("Adres").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child("Adres").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String adres=dataSnapshot.getValue().toString();
@@ -282,7 +297,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
 
             @Override
             public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference("Adres").child(Common.currentUser.getName()).child("Adres").addValueEventListener(new ValueEventListener() {
+                FirebaseDatabase.getInstance().getReference("Adres").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child("Adres").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         System.out.println(dataSnapshot.toString());
@@ -292,8 +307,8 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
                         if(dataSnapshot.exists()){
                             String ad=dataSnapshot.getValue().toString();
                             Request request=new Request(
-                                    Common.currentUser.getPhone(),
-                                    Common.currentUser.getName(),
+                                    FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),
+                                    currentName,
                                     ad,
                                     txtTotalPrice.getText().toString(),
                                     cart
@@ -309,7 +324,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
                           //  Toast.makeText(Cart.this,"Teşekkürler,Adres eklendi",Toast.LENGTH_SHORT).show();
 
                                 System.out.println("gondercek");
-                                sendNotification("5438858037",Common.currentUser.getName(),String.valueOf(System.currentTimeMillis())+" nolu siparişiniz bulunmaktadır.");
+                                sendNotification("5438858037",FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),String.valueOf(System.currentTimeMillis())+" nolu siparişiniz bulunmaktadır.");
 
 
 
@@ -352,7 +367,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
                 hashMap.put("Adres",adres);
 
                 DatabaseReference reference2=FirebaseDatabase.getInstance().getReference("Adres");
-                reference2.child(Common.currentUser.getName()).setValue(hashMap);
+                reference2.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(hashMap);
                 Toast.makeText(Cart.this, "Adresiniz eklendi", Toast.LENGTH_SHORT).show();
 
 
@@ -375,7 +390,7 @@ public class Cart extends AppCompatActivity implements RecyclerItemTouchHelperLi
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for( DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Tokens tokens =snapshot.getValue(Tokens.class);
-                    Data data=new Data(Common.currentUser.getPhone(),R.mipmap.ic_launcher,username+":"+message,"Yeni Siparis","5438858037");
+                    Data data=new Data(FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),R.mipmap.ic_launcher,username+":"+message,"Yeni Siparis","5438858037");
                   //  System.out.println("karsi"+userid2);
                     Sender sender=new Sender(data, tokens.getToken());
 

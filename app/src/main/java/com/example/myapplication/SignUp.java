@@ -1,3 +1,4 @@
+/*
 package com.example.myapplication;
 
 import android.app.Dialog;
@@ -183,3 +184,4 @@ public class SignUp extends AppCompatActivity {
 
     }
 }
+*/
