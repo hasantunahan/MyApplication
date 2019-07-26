@@ -92,7 +92,7 @@ public class SignUp extends AppCompatActivity {
                         public void onClick(View v) {
 
 
-                            User user = new User(edtName.getText().toString(), edtPassword.getText().toString(),"satici");
+                            User user = new User(edtName.getText().toString(), edtPassword.getText().toString(),"satici","default");
                             table_user.child(edtPhone.getText().toString()).setValue(user);
                             Toast.makeText(SignUp.this, "Kayıt Başarılı !", Toast.LENGTH_SHORT).show();
                            // finish();
@@ -141,7 +141,7 @@ public class SignUp extends AppCompatActivity {
 
                                     if(yetkiSpinner.getSelectedItem().toString().equals("satici")){
                                         mDialog.dismiss();
-                                        User user = new User(edtName.getText().toString(), edtPassword.getText().toString(),"satici");
+                                        User user = new User(edtName.getText().toString(), edtPassword.getText().toString(),"satici","default");
                                         table_user.child(edtPhone.getText().toString()).setValue(user);
                                         Toast.makeText(SignUp.this, "Kayıt Başarılı !", Toast.LENGTH_SHORT).show();
                                         finish();
@@ -149,7 +149,7 @@ public class SignUp extends AppCompatActivity {
 
                                     }else{
                                         mDialog.dismiss();
-                                        User user = new User(edtName.getText().toString(), edtPassword.getText().toString(),"musteri");
+                                        User user = new User(edtName.getText().toString(), edtPassword.getText().toString(),"musteri","default");
                                         table_user.child(edtPhone.getText().toString()).setValue(user);
                                         Toast.makeText(SignUp.this, "Kayıt Başarılı !", Toast.LENGTH_SHORT).show();
                                         finish();

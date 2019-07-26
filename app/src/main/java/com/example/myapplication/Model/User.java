@@ -5,7 +5,17 @@ public class User {
     private String Name;
     private String Password;
     private String Phone;
+    private String Yetki;
 
+    public String getPhotourl() {
+        return photourl;
+    }
+
+    public void setPhotourl(String photourl) {
+        this.photourl = photourl;
+    }
+
+    private String photourl;
 
     public String getYetki() {
         return Yetki;
@@ -15,16 +25,16 @@ public class User {
         Yetki = yetki;
     }
 
-    private String Yetki;
+
 
     public User() {
     }
 
-    public User(String name, String password,String yetki) {
+    public User(String name, String password,String yetki,String photourl) {
         Name = name;
         Password = password;
         Yetki=yetki;
-
+        this.photourl=photourl;
     }
 
     public String getPhone() {
