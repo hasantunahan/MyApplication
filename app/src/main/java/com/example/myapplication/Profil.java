@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,8 @@ public class Profil extends AppCompatActivity {
     private static final int IMAGE_REQUEST=1;
     private Uri imageuri;
     private StorageTask uploadTask;
+    private EditText profilname;
+    private Button guncelle;
     private String currentName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,21 @@ public class Profil extends AppCompatActivity {
         kaydetPhoto=findViewById(R.id.kaydetButtonProfil);
         geriProfil=findViewById(R.id.geriButtonprofil);
         kullaniciAdi=findViewById(R.id.kullaniciAdi);
+        profilname=findViewById(R.id.profilName);
+        guncelle=findViewById(R.id.isimkaydetButtonProfil);
+
+
+        guncelle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reference =FirebaseDatabase.getInstance().getReference("User").child(fuser.getDisplayName());
+                HashMap<String,Object> map = new HashMap<>();
+                map.put("name",profilname.getText().toString());
+                reference.updateChildren(map);
+                profilname.setText("");
+            }
+        });
+
 
         FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).addValueEventListener(new ValueEventListener() {
             @Override
