@@ -1,151 +1,198 @@
 package com.example.myapplication;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Model.User;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
+import java.util.HashMap;
 
 public class Profil extends AppCompatActivity {
 
-    ImageView imgProfil;
-    Button kaydetPhoto;
-    private Uri imageuri;
-    private final int PICK_IMAGE_REQUEST = 1;
-    FirebaseStorage storage;
+    ImageView imgProfil,geriProfil;
+    DatabaseReference reference;
+    FirebaseUser fuser;
+    private Button kaydetPhoto;
+    TextView kullaniciAdi;
     StorageReference storageReference;
-
-
+    private static final int IMAGE_REQUEST=1;
+    private Uri imageuri;
+    private StorageTask uploadTask;
+    private String currentName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
         imgProfil=findViewById(R.id.photoProfilImageView);
         kaydetPhoto=findViewById(R.id.kaydetButtonProfil);
-        storage=FirebaseStorage.getInstance();
-        storageReference=storage.getReference();
+        geriProfil=findViewById(R.id.geriButtonprofil);
+        kullaniciAdi=findViewById(R.id.kullaniciAdi);
 
-        resimIzniAl();
-
-        imgProfil.setOnClickListener(new View.OnClickListener() {
+        FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    currentName=dataSnapshot.child("name").getValue().toString();
+                    kullaniciAdi.setText(currentName.toUpperCase());
+                }
+            }
 
             @Override
-            public void onClick(View v) {
-                chooseimage();
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
-        kaydetPhoto.setOnClickListener(new View.OnClickListener() {
+            geriProfil.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(Profil.this,Home.class);
+                    startActivity(intent);
+                }
+            });
+        storageReference= FirebaseStorage.getInstance().getReference("profil");
+
+
+
+        fuser= FirebaseAuth.getInstance().getCurrentUser();
+
+
+        reference= FirebaseDatabase.getInstance().getReference("User").child(fuser.getDisplayName());
+
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                uploadImage();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user=dataSnapshot.getValue(User.class);
+                if(user.getPhotourl().equals("default")){
+                    imgProfil.setImageResource(R.drawable.photochange);
+                }else{
+                    Picasso.with(getApplicationContext()).load(user.getPhotourl()).into(imgProfil);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
+
+
+      kaydetPhoto.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              openImage();
+          }
+      });
+
 
     }//onCreate
 
-    private void uploadImage() {
-        if(imageuri != null){
-            final ProgressDialog progressDialog=new ProgressDialog(this);
-            progressDialog.setTitle("Yukleniyor");
-            progressDialog.show();
 
-            StorageReference ref= storageReference.child(System.currentTimeMillis()+"."+imageuri);
-            ref.putFile(imageuri)
-                   .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                       @Override
-                       public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                           progressDialog.dismiss();
-                           Toast.makeText(Profil.this, "tamam", Toast.LENGTH_SHORT).show();
-                       }
-                   })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(Profil.this, "yok", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress=(100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                            progressDialog.setMessage("Yukleniyor"+(int)progress+"&");
-                        }
-                    });
-        }
-
-    }
-
-
-    private void chooseimage() {
+    private void openImage() {
         Intent intent=new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Lütfen  seciniz"),PICK_IMAGE_REQUEST);
+        startActivityForResult(intent,IMAGE_REQUEST);
+
     }
 
+    private String getFileExtension(Uri uri){
+        ContentResolver contentResolver=getApplicationContext().getContentResolver();
+        MimeTypeMap mimeTypeMap=MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    private void uploadImage(){
+        final ProgressDialog pd=new ProgressDialog(getApplicationContext());
+        pd.setMessage("Uploading");
+      //  pd.show();
+        System.out.println("bosmu");
+        if(imageuri !=null){
+            final StorageReference filereference=storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imageuri));
+            System.out.println("0.denme");
+            uploadTask=filereference.putFile(imageuri);
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot,Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if(!task.isSuccessful()){
+                        throw task.getException();
+                    }
+                    System.out.println("1.deneme");
+                    return filereference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if(task.isSuccessful()){
+                        System.out.println("2.deneme");
+                        Uri downloadUri=task.getResult();
+                        System.out.println("3.deneme");
+                        String mUri=downloadUri.toString();
+
+                        reference =FirebaseDatabase.getInstance().getReference("User").child(fuser.getDisplayName());
+                        HashMap<String,Object> map = new HashMap<>();
+                        map.put("photourl",mUri);
+                        reference.updateChildren(map);
+                        pd.dismiss();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Yüklenemedi", Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    pd.dismiss();
+                }
+            });
+        }else{
+            Toast.makeText(getApplicationContext(), "Fotograf secilmedi", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST  &&  resultCode == Activity.RESULT_OK && data != null && data.getData() !=null){
+        if(requestCode == IMAGE_REQUEST  &&  resultCode == Activity.RESULT_OK && data != null && data.getData() !=null){
             imageuri=data.getData();
-
-            try {
-                Bitmap bitmap= MediaStore.Images.Media.getBitmap(this.getContentResolver(),imageuri);
-                imgProfil.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            /*if(uploadTask != null && uploadTask.isInProgress()){
-                Toast.makeText(getContext(), "Güncelleniyor", Toast.LENGTH_SHORT).show();
+            if(uploadTask != null && uploadTask.isInProgress()){
+                Toast.makeText(getApplicationContext(), "Güncelleniyor", Toast.LENGTH_SHORT).show();
             }else{
+                System.out.println("uploadonu");
                 uploadImage();
-            }*/
-        }
-    }
-
-
-    public boolean resimIzniAl(){
-
-        if(PackageManager.PERMISSION_GRANTED !=
-                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        PICK_IMAGE_REQUEST);
-                return true;
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        PICK_IMAGE_REQUEST);
-                return false;
             }
         }
-        else {
-            return true;
-        }
     }
-
 
 }

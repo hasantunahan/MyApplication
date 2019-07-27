@@ -28,11 +28,11 @@
         <item>@string/male</item>
         <item>@string/female</item>
     </string-array>
-    <string name="invalid_login">Kullanıcı Adı veya Şifre Yanlış</string>
+    <string name="invalid_login">Telefon veya Sifre Yanlis</string>
     <string name="empty_warning">Bu alan boş geçilemez</string>
     <string name="email_warning">Geçerli bir email giriniz</string>
     <string name="password_warning">Zayıf şifre</string>
-    <string name="username_warning">Kullanıcı adı çok uzun</string>
+    <string name="username_warning">Telefon adı çok uzun</string>
     <string name="dob_warning">Tarih seçiniz</string>
     <string name="friends">Arkadaşlar</string>
     <string name="anons">Anons</string>
@@ -54,7 +54,7 @@
     <string name="next">İleri</string>
     <string name="hide_anons">Anonsları Gizle</string>
     <string name="username_kontrol">Kullanıcı adı kontrol ediliyor.</string>
-    <string name="username_already">Kullanıcı adı bulunmaktadır.</string>
+    <string name="username_already">Telefon numarası bulunmaktadır.</string>
     <string name="email_control">E-posta kontrol ediliyor</string>
     <string name="email_already">E-posta bulunmaktadır.</string>
     <string name="profilPhoto_download_error">Profil fotoğrafı inderme hatası.</string>

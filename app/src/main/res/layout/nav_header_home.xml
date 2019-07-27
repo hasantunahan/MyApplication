@@ -12,27 +12,27 @@
         android:gravity="bottom"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-        <ImageView
-            android:id="@+id/textViewTel"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/headerImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:fontFamily="@font/kim"
             android:layout_marginRight="2dp"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             app:srcCompat="@drawable/ic_user_50px"
             />
 
-        <TextView
-            android:id="@+id/txtFullName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:fontFamily="@font/kim"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:text="Ebru"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="#2e2e2e"
-            android:textSize="15sp" />
+    <TextView
+        android:id="@+id/txtFullName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:fontFamily="@font/kim"
+        android:gravity="center|left"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#2e2e2e"
+        android:textSize="17sp" />
 
 
 

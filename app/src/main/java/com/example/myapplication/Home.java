@@ -57,7 +57,7 @@ public class Home extends AppCompatActivity
 
     FirebaseDatabase database;
     DatabaseReference category;
-
+    ImageView headerImage;
 
 
     TextView txtFullName;
@@ -72,7 +72,7 @@ public class Home extends AppCompatActivity
     private HashMap<String,String> imageList;
     private SliderLayout mSlider;
     private ImageView homeuser;
-
+    private String currentName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +90,10 @@ public class Home extends AppCompatActivity
 
 
         setSupportActionBar(toolbar);
+
+
+
+
 
         //firebase
         database=FirebaseDatabase.getInstance();
@@ -133,7 +137,28 @@ public class Home extends AppCompatActivity
         //kullanıcı adı
         View headerView=navigationView.getHeaderView(0);
         txtFullName=(TextView) headerView.findViewById(R.id.txtFullName);
-        txtFullName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        headerImage=headerView.findViewById(R.id.headerImage);
+        FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    currentName=dataSnapshot.child("name").getValue().toString();
+                    txtFullName.setText(currentName.toUpperCase());
+
+                    if(dataSnapshot.child("photourl").getValue().toString().equals("default")){
+                        headerImage.setImageResource(R.drawable.ic_male_user_52px);
+                    }else{
+                        Glide.with(getApplicationContext()).load(dataSnapshot.child("photourl").getValue().toString()).into(headerImage);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         //menü
         recycler_menu=(RecyclerView)findViewById(R.id.recycler_menu);
