@@ -17,7 +17,6 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public Button detaylariGor,detaylariGizle;
     public RecyclerView detaylarRecyler;
     public ItemClickListener itemClickListener;
-
     public ImageView btn_delete;
 
 
@@ -32,6 +31,11 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnC
         toplamtutar=itemView.findViewById(R.id.toplamtutar);
         tarih=itemView.findViewById(R.id.siparisTarihi);
         durumimage=itemView.findViewById(R.id.durumImage);
+        detaylariGor=itemView.findViewById(R.id.detaylarıGor);
+        detaylariGizle=itemView.findViewById(R.id.detaylarıGizle);
+        urunler=itemView.findViewById(R.id.orderDetailUrunler);
+        detaylarRecyler=itemView.findViewById(R.id.orderDetailRecyler);
+
         itemView.setOnClickListener(this);
 
     }

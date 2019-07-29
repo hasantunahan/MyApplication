@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,14 +11,20 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.myapplication.Model.Request;
+import com.example.myapplication.Model.foods;
+import com.example.myapplication.ViewHolder.OrderDetailAdapter;
 import com.example.myapplication.ViewHolder.OrderViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class OrderStatus extends AppCompatActivity {
@@ -29,14 +36,18 @@ public class OrderStatus extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference requests;
-
-    
+    private ArrayList<foods> list;
+    private OrderDetailAdapter oAdapter;
+private String orderkey;
+    RecyclerView tmpRecyclerview;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_status);
+
+        list=new ArrayList<foods>();
 
         //firebase
         database=FirebaseDatabase.getInstance();
@@ -47,7 +58,22 @@ public class OrderStatus extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        FirebaseDatabase.getInstance().getReference("Requests").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if(dataSnapshot.exists()){
+                orderkey= dataSnapshot.getValue().toString();
+            }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         loadOrders(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+
 
 
     }
@@ -78,6 +104,12 @@ public class OrderStatus extends AppCompatActivity {
                     viewHolder.durumimage.setImageResource(R.drawable.ic_ok_yesil);
                 }
 
+                viewHolder.detaylarRecyler.setHasFixedSize(true);
+                layoutManager = new LinearLayoutManager(getApplicationContext());
+                viewHolder.detaylarRecyler.setLayoutManager(layoutManager);
+
+                tmpRecyclerview=viewHolder.detaylarRecyler;
+
                 viewHolder.txtOrderId.setText(adapter.getRef(position).getKey());
                 viewHolder.txtOrderStatus.setText(convertCodeToStatus(model.getStatus()));
                 viewHolder.txtOrderAddress.setText(model.getAddress());
@@ -92,6 +124,56 @@ public class OrderStatus extends AppCompatActivity {
 
                     }
                 });
+
+                viewHolder.detaylariGor.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        viewHolder.detaylariGizle.setVisibility(View.VISIBLE);
+                        viewHolder.detaylarRecyler.setVisibility(View.VISIBLE);
+                        viewHolder.urunler.setVisibility(View.VISIBLE);
+                        viewHolder.detaylariGor.setVisibility(View.GONE);
+
+                        FirebaseDatabase.getInstance().getReference("Requests").child(adapter.getRef(position).getKey()).child("foods").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                list.clear();
+                                if(dataSnapshot.exists()){
+                                    System.out.println("1.foods");
+                                    for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                                        foods f=snapshot.getValue(foods.class);
+                                        list.add(f);
+                                        System.out.println("foods"+f.getProductId());
+
+                                    }
+                                    oAdapter=new OrderDetailAdapter(OrderStatus.this,list);
+                                    viewHolder.detaylarRecyler.setAdapter(oAdapter);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                });
+
+
+                viewHolder.detaylariGizle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        viewHolder.detaylariGor.setVisibility(View.VISIBLE);
+                        viewHolder.detaylariGizle.setVisibility(View.GONE);
+                        viewHolder.urunler.setVisibility(View.GONE);
+                        viewHolder.detaylarRecyler.setVisibility(View.GONE);
+                        list.clear();
+
+
+                    }
+                });
+
 
             }
         };
