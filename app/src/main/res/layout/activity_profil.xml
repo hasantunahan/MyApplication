@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@drawable/profilbackground"
     tools:context=".Profil">
 
     <android.support.constraint.ConstraintLayout
@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#fff"
-        android:elevation="1dp"
+        android:elevation="2dp"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,14 +74,20 @@
         android:id="@+id/profilName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
         android:ems="10"
         android:fontFamily="@font/kim"
         android:hint="isim"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/kaydetButtonProfil"
-        app:layout_constraintStart_toStartOf="@+id/kaydetButtonProfil"
-        app:layout_constraintTop_toBottomOf="@+id/kaydetButtonProfil" />
+        android:textColorHint="#707070"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kullaniciAdi" />
 
     <TextView
         android:id="@+id/kullaniciAdi"
@@ -100,40 +106,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/photoProfilImageView" />
 
-    <Button
-        android:id="@+id/kaydetButtonProfil"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginRight="64dp"
-        android:background="@drawable/buton_yesil"
-        android:drawableLeft="@drawable/ic_add_a_photo_black_24dp"
-        android:fontFamily="@font/kim"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:text="Fotograf Sec"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kullaniciAdi" />
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/photoProfilImageView"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:elevation="3dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
         app:srcCompat="@drawable/photochange" />

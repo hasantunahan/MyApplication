@@ -55,7 +55,7 @@ public class Profil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
         imgProfil=findViewById(R.id.photoProfilImageView);
-        kaydetPhoto=findViewById(R.id.kaydetButtonProfil);
+        //kaydetPhoto=findViewById(R.id.kaydetButtonProfil);
         geriProfil=findViewById(R.id.geriButtonprofil);
         kullaniciAdi=findViewById(R.id.kullaniciAdi);
         profilname=findViewById(R.id.profilName);
@@ -124,7 +124,7 @@ public class Profil extends AppCompatActivity {
         });
 
 
-      kaydetPhoto.setOnClickListener(new View.OnClickListener() {
+      imgProfil.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
               openImage();
