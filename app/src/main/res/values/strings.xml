@@ -25,8 +25,8 @@
     <string name="male">Erkek</string>
     <string name="female">Kadın</string>
     <string-array name="sex">
-        <item>@string/male</item>
-        <item>@string/female</item>
+        <item>satici</item>
+        <item>musteri</item>
     </string-array>
     <string name="invalid_login">Telefon veya Sifre Yanlis</string>
     <string name="empty_warning">Bu alan boş geçilemez</string>

@@ -97,9 +97,9 @@ public class KayitOlEkran extends AppCompatActivity {
                     //"(?=.*[0-9])" +         //at least 1 digit
                     //"(?=.*[a-z])" +         //at least 1 lower case letter
                     //"(?=.*[A-Z])" +         //at least 1 upper case letter
-                    "(?=.*[0-9])" +
+            //        "(?=.*[0-9])" +
                     "(?=.*[a-zA-Z])" +      //any letter
-                    "(?=.*['*!@#$%^&+=.,_-])" +    //at least 1 special character
+            //        "(?=.*['*!@#$%^&+=.,_-])" +    //at least 1 special character
                     "(?=\\S+$)" +           //no white spaces
                     ".{6,}" +               //at least 6 characters
                     "$");
@@ -304,9 +304,14 @@ public class KayitOlEkran extends AppCompatActivity {
             usernameWrapper.setError("Kullanıcı Adı @ İşareti içeremez.");
             kontrol = false;
         }
-        else if (usernameInput.length() > 15) {
+        else if (usernameInput.length() > 11) {
             usernameWrapper.setError(getResources().getString(R.string.username_warning));
             kontrol = false;
+        }
+        else if(usernameInput.length() <10){
+            usernameWrapper.setError("Telefon numarasını 10 yada 11 haneli olarak giriniz");
+            kontrol=false;
+
         } else {
             usernameWrapper.setError(null);
         }
