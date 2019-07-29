@@ -17,6 +17,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class OrderStatus extends AppCompatActivity {
 
     public RecyclerView recyclerView;
@@ -57,8 +60,24 @@ public class OrderStatus extends AppCompatActivity {
                 requests.orderByChild("phone")
                 .equalTo(phone)
         ) {
+
             @Override
             protected void populateViewHolder(OrderViewHolder viewHolder, Request model, final int position) {
+                long tarih=Long.parseLong(adapter.getRef(position).getKey());
+                SimpleDateFormat formatter= new SimpleDateFormat("dd-MM-yyyy HH:mm ");
+                Date date = new Date(tarih);
+                viewHolder.tarih.setText(formatter.format(date)+"");
+
+                viewHolder.toplamtutar.setText(model.getTotal()+" TL");
+
+                if(model.getStatus().equals("0")){
+                    viewHolder.durumimage.setImageResource(R.drawable.ic_wait_52px);
+                }else if(model.getStatus().equals("1")){
+                    viewHolder.durumimage.setImageResource(R.drawable.ic_bus_48px);
+                }else{
+                    viewHolder.durumimage.setImageResource(R.drawable.ic_ok_yesil);
+                }
+
                 viewHolder.txtOrderId.setText(adapter.getRef(position).getKey());
                 viewHolder.txtOrderStatus.setText(convertCodeToStatus(model.getStatus()));
                 viewHolder.txtOrderAddress.setText(model.getAddress());
