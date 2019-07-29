@@ -27,6 +27,7 @@ public class YorumlarAdapter extends RecyclerView.Adapter<YorumlarAdapter.MyView
 
     Context context;
     ArrayList<Rating> list;
+    String currentName;
 
     public YorumlarAdapter(Context c,ArrayList<Rating> a){
         context=c;
@@ -44,8 +45,11 @@ public class YorumlarAdapter extends RecyclerView.Adapter<YorumlarAdapter.MyView
         long tarih=Long.parseLong(list.get(i).getTime());
         SimpleDateFormat formatter= new SimpleDateFormat("dd-MM-yyyy HH:mm ");
         Date date = new Date(tarih);
+
      //   System.out.println();
-        myViewHolder.name.setText(list.get(i).getUserName());
+        //myViewHolder.name.setText(list.get(i).getUserName());
+
+
         myViewHolder.yorum.setText(list.get(i).getComment());
         myViewHolder.rating.setText(list.get(i).getRateValues()+".0");
         myViewHolder.ratingBar.setRating(Integer.parseInt(list.get(i).getRateValues()));
@@ -58,7 +62,8 @@ public class YorumlarAdapter extends RecyclerView.Adapter<YorumlarAdapter.MyView
                 User u=snapshot.getValue(User.class);
         if(snapshot.getKey().equals(list.get(i).getUserPhone())){
 
-
+            currentName=u.getName();
+            myViewHolder.name.setText(currentName.toUpperCase());
         if(u.getPhotourl().equals("default")){
         myViewHolder.photoImage.setImageResource(R.drawable.ic_male_user_52px);
         }else{

@@ -7,39 +7,39 @@
         <item
             android:id="@+id/nav_menu"
             android:icon="@drawable/ic_menu_48px"
-            android:iconTint="#2e2e2e"
-            android:title="Menu"
+            android:iconTint="#45363B"
+            android:title="MENU"
             android:fontFamily="@font/kim"
             />
 
         <item android:id="@+id/nav_cart"
             android:icon="@drawable/shopping_card_white"
-            android:iconTint="#2e2e2e"
-            android:title="Sepet" />
+            android:iconTint="#45363B"
+            android:title="SEPETIM" />
 
         <item
             android:id="@+id/nav_fav"
             android:icon="@drawable/ic_favorite_black_24dp"
-            android:iconTint="#2e2e2e"
-            android:title="Favoriler" />
+            android:iconTint="#45363B"
+            android:title="FAVORILERIM" />
 
         <item
             android:id="@+id/nav_orders"
             android:icon="@drawable/ic_alarm_clock_64px"
-            android:iconTint="#2e2e2e"
-            android:title="Siparişler" />
+            android:iconTint="#45363B"
+            android:title="SIPARISLERIM" />
 
         <item
             android:id="@+id/nav_change_pwd"
             android:icon="@drawable/ic_password_64px"
-            android:iconTint="#2e2e2e"
-            android:title="Parola Güncelle" />
+            android:iconTint="#45363B"
+            android:title="PARALO GUNCELLE" />
 
         <item
             android:id="@+id/nav_log_out"
             android:icon="@drawable/ic_logout_rounded_up_50px"
-            android:iconTint="#2e2e2e"
-            android:title="Çıkış" />
+            android:iconTint="#45363B"
+            android:title="CIKIS YAP" />
 
     </group>
 
