@@ -1,17 +1,13 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.example.myapplication.Common.Common;
 import com.example.myapplication.Notification.Tokens;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class Admin_Activity extends AppCompatActivity {
 
@@ -27,7 +23,7 @@ public class Admin_Activity extends AppCompatActivity {
     sirketAdiAdminekran=findViewById(R.id.sirketiAdiAdminekran);
     ///////////////
 
-        //ŞirketAdi alıyoruz
+   /*     //ŞirketAdi alıyoruz
         FirebaseDatabase.getInstance().getReference("SirketBilgileri").child(Common.currentUser.getName()).child("SirketAdi").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -40,7 +36,7 @@ public class Admin_Activity extends AppCompatActivity {
 
             }
         });
-////////////şirketadi
+////////////şirketadi   */
       //  updateToken(FirebaseInstanceId.getInstance().getToken());
 
 

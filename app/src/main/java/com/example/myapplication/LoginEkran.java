@@ -50,6 +50,7 @@ public class LoginEkran extends AppCompatActivity {
     private AtomicBoolean profilPhotoCekildi;
     private AtomicBoolean backgroundPhotoCekildi;
     private User user;
+    private String yetki;
 
     //TODO: kullanıcı çıkış yaptığında local veritabanı tamamen temizlenecek.
     //TODO: Tekrar giriş yapan kullanıcı için local veritabanına bilgiler firebaseden çekilecek. Çekilen anons sayısı kontrollü olacak.
@@ -182,6 +183,7 @@ public class LoginEkran extends AppCompatActivity {
                                     Log.d("email: ", kullaniciAdi + " - " + dataSnapshot.child("email"));
                                     kullaniciAdi = datas.child("email").getValue().toString();
                                     Log.d("email: ", datas.getValue().toString());
+                                    yetki=datas.child("yetki").getValue().toString();
                                 }
                             }
                             girisYap();
@@ -220,9 +222,16 @@ public class LoginEkran extends AppCompatActivity {
                 if (fUser != null) {
                     fUser.reload();
                 }
-                Intent intent = new Intent(getApplicationContext(), Home.class);
-                finish();
-                startActivity(intent);
+                if(yetki.equals("satici")){
+                    Intent intent = new Intent(getApplicationContext(), Admin_Activity.class);
+                    finish();
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(getApplicationContext(), Home.class);
+                    finish();
+                    startActivity(intent);
+                }
+
 
             } else {
              //   progressDialog.dismiss();

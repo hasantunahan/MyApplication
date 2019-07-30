@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
 
 public class KayitOlEkran extends AppCompatActivity {
 
-    private Spinner genderSpinner;
+    private Spinner yetkispinner;
     private TextView dobEditText;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
     Button signUpOkeyButton;
@@ -61,7 +61,7 @@ public class KayitOlEkran extends AppCompatActivity {
     private String username;
     private String email;
     private String password;
-    private String gender;
+    private String yetki;
     private boolean usernameKontrol = false;
     private boolean emailKontrol = false;
     private View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
@@ -116,7 +116,7 @@ public class KayitOlEkran extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordEditText);
         emailWrapper = findViewById(R.id.emailWrapper);
         passwordWrapper = findViewById(R.id.passwordWrappper);
-        genderSpinner = findViewById(R.id.genderSpinner);
+        yetkispinner = findViewById(R.id.genderSpinner);
         nameEditText = findViewById(R.id.nameEditText);
         nameWrapper = findViewById(R.id.nameWrapper);
         usernameEditText = findViewById(R.id.usernameEditText);
@@ -130,7 +130,7 @@ public class KayitOlEkran extends AppCompatActivity {
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.sex, R.layout.custom_spinner_item);
         adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
-        genderSpinner.setAdapter(adapter);
+        yetkispinner.setAdapter(adapter);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -144,7 +144,7 @@ public class KayitOlEkran extends AppCompatActivity {
                 username = usernameEditText.getText().toString().trim();
                 email = emailEditText.getText().toString().trim();
                 password = passwordEditText.getText().toString().trim();
-                gender = genderSpinner.getSelectedItem().toString();
+                yetki = yetkispinner.getSelectedItem().toString();
                 if (!tumKontroller()){
 //                    progressDialog.dismiss();
                     return;
@@ -209,7 +209,7 @@ public class KayitOlEkran extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         fUser = mAuth.getCurrentUser();
                         Objects.requireNonNull(fUser).reload();
-                        final User user = new User(name,password,username,"musteri",email,"default");
+                        final User user = new User(name,password,username,yetki,email,"default");
                         UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(user.getPhone()).build();
                         fUser.updateProfile(userProfileChangeRequest);
                         Log.d("İşlem: ", "createUserWithEmail:success");
@@ -229,8 +229,13 @@ public class KayitOlEkran extends AppCompatActivity {
                                     finish();
                                 }*/
                                /* else {*/
-                                    startActivity(new Intent(getApplicationContext(),Home.class));
-                                    finish();
+                                  if(yetki.equals("satici")){
+                                      startActivity(new Intent(getApplicationContext(),Admin_Activity.class));
+                                      finish();
+                                  }else{
+                                      startActivity(new Intent(getApplicationContext(),Home.class));
+                                      finish();
+                                  }
                                // }
                             }
                             else{

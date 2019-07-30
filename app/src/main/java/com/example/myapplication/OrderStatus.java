@@ -168,7 +168,6 @@ private String orderkey;
                         viewHolder.detaylariGizle.setVisibility(View.GONE);
                         viewHolder.urunler.setVisibility(View.GONE);
                         viewHolder.detaylarRecyler.setVisibility(View.GONE);
-                        list.clear();
 
 
                     }

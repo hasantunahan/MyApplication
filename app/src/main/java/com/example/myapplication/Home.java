@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -73,6 +74,9 @@ public class Home extends AppCompatActivity
     private SliderLayout mSlider;
     private ImageView homeuser;
     private String currentName;
+    FirebaseDatabase fbs;
+    DatabaseReference drf;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +102,9 @@ public class Home extends AppCompatActivity
         //firebase
         database=FirebaseDatabase.getInstance();
         category=database.getReference("Category");
+
+        fbs=FirebaseDatabase.getInstance();
+        drf=fbs.getReference("User");
 
          fab = (CounterFab) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +136,31 @@ public class Home extends AppCompatActivity
             }
         });
 
+
+
+        //menü
+        recycler_menu=(RecyclerView)findViewById(R.id.recycler_menu);
+        recycler_menu.setHasFixedSize(true);
+        layoutManager=new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        recycler_menu.setLayoutManager(layoutManager);
+
+        if(Common.isConnectedToInternet(this))
+            loadMenu();
+        else
+        {
+            Toast.makeText(Home.this, "İnternet bağlantınızı kontrol ediniz", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+      //  updateToken(FirebaseInstanceId.getInstance().getToken());
+
+        slider();
+
+       // menuheader();
+
+    }
+
+    private void menuheader() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -138,7 +170,7 @@ public class Home extends AppCompatActivity
         View headerView=navigationView.getHeaderView(0);
         txtFullName=(TextView) headerView.findViewById(R.id.txtFullName);
         headerImage=headerView.findViewById(R.id.headerImage);
-        FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).addValueEventListener(new ValueEventListener() {
+       drf.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
@@ -159,25 +191,6 @@ public class Home extends AppCompatActivity
 
             }
         });
-
-        //menü
-        recycler_menu=(RecyclerView)findViewById(R.id.recycler_menu);
-        recycler_menu.setHasFixedSize(true);
-        layoutManager=new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        recycler_menu.setLayoutManager(layoutManager);
-
-        if(Common.isConnectedToInternet(this))
-            loadMenu();
-        else
-        {
-            Toast.makeText(Home.this, "İnternet bağlantınızı kontrol ediniz", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-      //  updateToken(FirebaseInstanceId.getInstance().getToken());
-
-        slider();
-
     }
 
     private void slider() {
