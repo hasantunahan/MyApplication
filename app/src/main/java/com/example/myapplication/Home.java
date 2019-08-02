@@ -155,8 +155,7 @@ public class Home extends AppCompatActivity
       //  updateToken(FirebaseInstanceId.getInstance().getToken());
 
         slider();
-
-       // menuheader();
+        menuheader();
 
     }
 
@@ -170,7 +169,7 @@ public class Home extends AppCompatActivity
         View headerView=navigationView.getHeaderView(0);
         txtFullName=(TextView) headerView.findViewById(R.id.txtFullName);
         headerImage=headerView.findViewById(R.id.headerImage);
-       drf.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).addValueEventListener(new ValueEventListener() {
+       /*drf.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
@@ -190,7 +189,7 @@ public class Home extends AppCompatActivity
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
     }
 
     private void slider() {
