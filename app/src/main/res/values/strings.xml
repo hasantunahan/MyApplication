@@ -9,4 +9,66 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_tracking_order">Map</string>
+
+
+    <string name="username">Kullanıcı Adı</string>
+    <string name="password">Şifre</string>
+    <string name="login">GİRİŞ</string>
+    <string name="or">veya</string>
+    <string name="sign_up">KAYIT OL</string>
+    <string name="forgot_password">Şifremi Unuttum</string>
+    <string name="name">İsim</string>
+    <string name="surname">Soyisim</string>
+    <string name="e_mail">E-Posta</string>
+    <string name="dob">Doğum Tarihi</string>
+    <string name="sex">Cinsiyet</string>
+    <string name="male">Erkek</string>
+    <string name="female">Kadın</string>
+    <string-array name="sex">
+        <item>satici</item>
+        <item>musteri</item>
+    </string-array>
+    <string name="invalid_login">Telefon veya Sifre Yanlis</string>
+    <string name="empty_warning">Bu alan boş geçilemez</string>
+    <string name="email_warning">Geçerli bir email giriniz</string>
+    <string name="password_warning">Zayıf şifre</string>
+    <string name="username_warning">Telefon adı çok uzun</string>
+    <string name="dob_warning">Tarih seçiniz</string>
+    <string name="friends">Arkadaşlar</string>
+    <string name="anons">Anons</string>
+    <string name="likes">Beğeni</string>
+    <string name="edit_profile">Profili Düzenle</string>
+    <string name="about_me">HAKKIMDA</string>
+    <string name="registering_user">Kullanıcı Oluşturuluyor</string>
+    <string name="please_wait">Lütfen bekleyiniz.</string>
+    <string name="user_registering_fail">Hesap oluşturulamadı, lütfen tekrar deneyin.</string>
+    <string name="verification_info">Giriş Yapabilmek İçin Lütfen Mail Adresine Gelen Doğrulama Linkine Tıklayınız. Spam Kutusuna Gelmiş Olabilir.</string>
+    <string name="send_again">Tekrar Gönder</string>
+    <string name="email_didnt_come">E-mail Gelmedi Mi?</string>
+    <string name="show_anons">Anonsları Gör</string>
+    <string name="processing">İşleminiz Yapılıyor</string>
+    <string name="email_send">E-posta gönderildi.</string>
+    <string name="an_error_occurred">Bir Hata Oluştu. Lütfen Bizimle İletişime Geçiniz.</string>
+    <string name="username_empty">Lütfen kullanıcı adı veya e-posta giriniz.</string>
+    <string name="password_empty">Lütfen şifrenizi giriniz</string>
+    <string name="next">İleri</string>
+    <string name="hide_anons">Anonsları Gizle</string>
+    <string name="username_kontrol">Kullanıcı adı kontrol ediliyor.</string>
+    <string name="username_already">Telefon numarası bulunmaktadır.</string>
+    <string name="email_control">E-posta kontrol ediliyor</string>
+    <string name="email_already">E-posta bulunmaktadır.</string>
+    <string name="profilPhoto_download_error">Profil fotoğrafı inderme hatası.</string>
+    <string name="backgroundPhoto_download_error">Arkaplan fotoğrafı indirme hatası.</string>
+    <string name="user_info_error">Kullanıcı bilgilerini indirme hatası.</string>
+    <string name="connection_timeout">Bağlantı Zaman Aşımına Uğradı</string>
+
+    <string name="opinion_suggestions">Görüş ve Öneriler</string>
+    <string name="opinion">Görüş</string>
+    <string name="suggestion">Öneri</string>
+
+
+    <string-array name="yetki">
+        <item>musteri</item>
+        <item>satici</item>
+    </string-array>
 </resources>

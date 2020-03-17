@@ -20,7 +20,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public ElegantNumberButton btn_quantity;
 
     public TextView txt_cart_name,txt_price;
-
+public ImageView cartimage;
     public RelativeLayout view_background;
     public LinearLayout view_foreground;
 
@@ -35,7 +35,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         txt_cart_name=(TextView) itemView.findViewById(R.id.cart_item_name);
         txt_price=(TextView)itemView.findViewById(R.id.cart_item_price);
         btn_quantity=(ElegantNumberButton) itemView.findViewById(R.id.btn_quantity);
-
+cartimage=itemView.findViewById(R.id.cartImage);
         view_background=(RelativeLayout)itemView.findViewById(R.id.view_background);
         view_foreground=(LinearLayout)itemView.findViewById(R.id.view_foreground);
 

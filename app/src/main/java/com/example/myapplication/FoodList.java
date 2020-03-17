@@ -1,34 +1,42 @@
 package com.example.myapplication;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
+import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.widget.SearchView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andremion.counterfab.CounterFab;
+import com.bumptech.glide.Glide;
 import com.example.myapplication.Common.Common;
 import com.example.myapplication.Database.Database;
 import com.example.myapplication.Interface.ItemClickListener;
 import com.example.myapplication.Model.Food;
+import com.example.myapplication.Model.Order;
+import com.example.myapplication.Model.Rating;
 import com.example.myapplication.ViewHolder.FoodViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FoodList extends AppCompatActivity {
@@ -38,8 +46,14 @@ public class FoodList extends AppCompatActivity {
     CounterFab fab;
     FirebaseDatabase database;
     DatabaseReference foodList;
-
+    private Intent intent;
+    private TextView urunlistesi_ismi;
+    private ImageView geriButton;
     String categoryId="";
+    private int begenisayisi;
+    private String foodidKey;
+    private ImageView searchImage;
+
 
     FirebaseRecyclerAdapter<Food, FoodViewHolder> adapter;
 
@@ -57,6 +71,32 @@ public class FoodList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
 
+
+
+        //categori ismi icin
+        urunlistesi_ismi=findViewById(R.id.urunlistesi);
+        geriButton=findViewById(R.id.geriFoodlist);
+        searchImage=findViewById(R.id.searcImage);
+
+        searchImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        intent=getIntent();
+        String kategori_ismi=intent.getStringExtra("kategori_ismi");
+        urunlistesi_ismi.setText(kategori_ismi);
+
+        geriButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(FoodList.this,Home.class);
+                startActivity(intent);
+            }
+        });
+
         //Fİrebase
         database = FirebaseDatabase.getInstance();
         foodList=database.getReference("Food");
@@ -65,7 +105,7 @@ public class FoodList extends AppCompatActivity {
 
         recyclerView =(RecyclerView) findViewById(R.id.recycler_food);
         recyclerView.setHasFixedSize(true);
-        layoutManager=new LinearLayoutManager(this);
+        layoutManager=new GridLayoutManager(this,1);
         recyclerView.setLayoutManager(layoutManager);
 
         //intent çapırdık
@@ -84,6 +124,7 @@ public class FoodList extends AppCompatActivity {
 
         searchView=(MaterialSearchBar) findViewById(R.id.searchBar);
         searchView.setHint("Buradan arayabilirsiniz");
+        searchView.setTextColor(Color.BLUE); // set the text color
 
         fab = (CounterFab) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -152,13 +193,17 @@ public class FoodList extends AppCompatActivity {
                 Food.class,
                 R.layout.food_item,
                 FoodViewHolder.class,
-                foodList.orderByChild("Name").equalTo(text.toString())
+                foodList.orderByChild("name").equalTo(text.toString())
         ) {
             @Override
             protected void populateViewHolder(FoodViewHolder viewHolder, Food model, int position) {
-                viewHolder.food_name.setText(model.getName());
-                Picasso.with(getBaseContext()).load(model.getImage())
-                        .into(viewHolder.food_image);
+                String buyuk=model.getName().toUpperCase();
+                viewHolder.food_name.setText(buyuk);
+              /*  Picasso.with(getBaseContext()).load(model.getImage())
+                        .into(viewHolder.food_image);*/
+
+            // Picasso.get().load(model.getImage()).resize(100,100).centerCrop().into(viewHolder.food_image);
+             Glide.with(getApplicationContext()).load(model.getImage()).into(viewHolder.food_image);
 
                 final Food local=model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
@@ -178,7 +223,7 @@ public class FoodList extends AppCompatActivity {
 
 
     private void loadSuggest() {
-        foodList.orderByChild("MenuId").equalTo(categoryId)
+        foodList.orderByChild("menuId").equalTo(categoryId)
 
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -201,15 +246,73 @@ public class FoodList extends AppCompatActivity {
         adapter=new FirebaseRecyclerAdapter<Food, FoodViewHolder>(Food.class,
                 R.layout.food_item,
                 FoodViewHolder.class,
-                foodList.orderByChild("MenuId").equalTo(categoryId)) {
+                foodList.orderByChild("menuId").equalTo(categoryId)) {
             @Override
-            protected void populateViewHolder(final FoodViewHolder viewHolder, Food model, final int position) {
+            protected void populateViewHolder(final FoodViewHolder viewHolder, final Food model, final int position) {
 
-                viewHolder.food_name.setText(model.getName());
-                Picasso.with(getBaseContext()).load(model.getImage())
-                        .into(viewHolder.food_image);
+                viewHolder.food_name.setText(model.getName().toUpperCase());
+                viewHolder.price.setText(model.getPrice()+" ₺");
+               /* Picasso.with(getBaseContext()).load(model.getImage())
+                        .into(viewHolder.food_image);*/
 
-                if(localDB.isFavorite(adapter.getRef(position).getKey()))
+               Glide.with(FoodList.this).load(model.getImage()).into(viewHolder.food_image);
+
+               // Picasso.get().load(model.getImage()).resize(100,100).centerCrop().into(viewHolder.food_image);
+
+                //Picasso.get().load(model.getImage()).resize(1000,1000).centerCrop().into(viewHolder.food_image);
+
+                viewHolder.sepet_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        new Database(getBaseContext()).addToChart(new Order(
+
+
+                                adapter.getRef(position).getKey(),
+                                model.getName(),
+                               "1",
+                                model.getPrice().toString(),
+                                model.getDiscount()
+
+
+
+                        ));
+
+                        Toast.makeText(FoodList.this,"Sepete eklendi",Toast.LENGTH_SHORT).show();
+                        fab.setCount(new Database(getApplicationContext()).getCountCart());
+
+                    }
+                });
+
+                viewHolder.share_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+               Intent shareIntent =new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                String sharedBody="body";
+                String shareSub="sub";
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT,sharedBody);
+                startActivity(Intent.createChooser(shareIntent,"Paylaş"));
+
+                    }
+                });
+
+                /*viewHolder.yorumlar_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent(FoodList.this,Yorumlar.class);
+                        intent.putExtra("FoodId",adapter.getRef(position).getKey());
+                        startActivity(intent);
+                    }
+                });*/
+
+
+//likeeee
+               /* if(localDB.isFavorite(adapter.getRef(position).getKey()))
                     viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
 
                 viewHolder.fav_image.setOnClickListener(new View.OnClickListener() {
@@ -228,7 +331,78 @@ public class FoodList extends AppCompatActivity {
 
                         }
                     }
-                });
+                });*/
+
+
+
+
+                ////fav_basla
+
+                //viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
+                                final DatabaseReference fav_Ref=FirebaseDatabase.getInstance().getReference("Favori");
+
+                                fav_Ref.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child(adapter.getRef(position).getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if( dataSnapshot.exists()){
+                                            viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                            viewHolder.fav_image.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    fav_Ref.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child(adapter.getRef(position).getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if(!dataSnapshot.exists()){
+                                                HashMap<String,Object> hashMap=new HashMap<>();
+                                                hashMap.put("name",model.getName());
+                                                hashMap.put("image",model.getImage());
+                                                hashMap.put("description",model.getDescription());
+                                                hashMap.put("foodId",model.getFoodId());
+                                                hashMap.put("price",model.getPrice());
+                                                hashMap.put("discount",model.getDiscount());
+                                                hashMap.put("menuId",model.getMenuId());
+                                                DatabaseReference reference2=FirebaseDatabase.getInstance().getReference("Favori");
+                                                reference2.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child(adapter.getRef(position).getKey()).setValue(hashMap);
+                                                viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
+                                                Toast.makeText(FoodList.this, "Favorilere eklendi", Toast.LENGTH_SHORT).show();
+                                                Intent intent=new Intent(FoodList.this,Favoriler.class);
+                                                intent.putExtra("FoodId",adapter.getRef(position).getKey());
+                                               // startActivity(intent);
+
+                                            }else{
+                                                fav_Ref.child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child(adapter.getRef(position).getKey()).removeValue();
+                                                viewHolder.fav_image.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                                                Toast.makeText(FoodList.this, "Favorilerden silindi", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+
+                                }
+                            });
+
+
+
+
+
+                ///fav_bitti
+
 
                 final Food local=model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
@@ -241,8 +415,53 @@ public class FoodList extends AppCompatActivity {
                     }
                 });
 
-            }
-        };
+                FirebaseDatabase.getInstance().getReference("Rating").child(adapter.getRef(position).getKey()).addValueEventListener(new ValueEventListener() {
+                    int count=0;
+                    float sum=0;
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                Rating r= snapshot.getValue(Rating.class);
+                                if(r.getFoodId().equals(adapter.getRef(position).getKey())){
+                                    count++;
+                                    sum += Float.parseFloat(r.getRateValues());
+                                }
+                            }
+                            if( count !=0){
+                                float avg=sum/count;
+                                String x = new DecimalFormat("#,#0.0").format(avg);
+                                viewHolder.yorumsayisi.setText("("+count+" yorum)");
+                                if(avg >=4){
+                                    //iewHolder.kalitekontrol.setVisibility(View.VISIBLE);
+                                  viewHolder.ratingOrt.setText(x);
+                                  viewHolder.ratingBarfoodlist.setRating(avg);
+
+                                }
+                            }
+                            count=0;
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
+
+
+
+            }//viewHolder bitiş
+        };//fonk
+
+
 
 
         recyclerView.setAdapter(adapter);

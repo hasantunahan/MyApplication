@@ -5,32 +5,168 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FoodList">
-
-    <com.mancj.materialsearchbar.MaterialSearchBar
-        android:id="@+id/searchBar"
+    android:background="#fff"
+    tools:context=".FoodList"
+    >
+   <!-- <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
         android:layout_alignParentTop="true"
-        app:mt_speechMode="false"
-        android:layout_marginTop="12dp"
-        android:lineSpacingMultiplier="1.5"
-        android:padding="12dp"
-        app:mt_hint="Buradan arayabilirsiniz"
+        android:layout_height="wrap_content"
+        android:background="#FD7D83"
+        android:minHeight="?attr/actionBarSize"
+        android:padding="20dp"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/adminMenuImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_menu_black_24dp"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="20dp" />
+
+        <TextView
+            android:id="@+id/sirketiAdiAdminekran"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/kim"
+            android:gravity="center|left"
+            android:paddingLeft="14dp"
+            android:text="SIRKET BILGILERI"
+            android:textColor="#fff"
+            android:textSize="16sp" />
+
+
+    </android.support.v7.widget.Toolbar>-->
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/barr"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="#fff">
+
+        <com.mancj.materialsearchbar.MaterialSearchBar
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:lineSpacingMultiplier="1.5"
+            android:padding="9dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/urunlistesi"
+            app:mt_hint="Buradan arayabilirsiniz"
+            app:mt_placeholder="..."
+            app:mt_placeholderColor="#707070"
+            app:mt_speechMode="false" />
+
+        <ImageView
+            android:id="@+id/geriFoodlist"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_backk"
+            android:tint="#707070"
+            app:layout_constraintEnd_toStartOf="@+id/searchBar"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/urunlistesi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchBar"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:fontFamily="@font/kim"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="ÜRÜNLER"
+            android:textColor="#2e2e2e"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.431"
+            app:layout_constraintStart_toEndOf="@+id/geriFoodlist"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/searcImage"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="29dp"
+            android:tint="#707070"
+            app:layout_constraintBottom_toTopOf="@+id/searchBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_search_black_24dp" />
+
+        <Button
+            android:id="@+id/siralabuton"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="#fff"
+            android:drawableLeft="@drawable/ic_sort_52px"
+            android:fontFamily="@font/kim"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Sırala"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchBar" />
+
+        <Button
+            android:id="@+id/filtrelebutton"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:elevation="2dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="#fff"
+            android:drawableLeft="@drawable/ic_filter_52px"
+            android:fontFamily="@font/kim"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:text="Filtrele"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.071"
+            app:layout_constraintStart_toEndOf="@+id/siralabuton"
+            app:layout_constraintTop_toBottomOf="@+id/searchBar" />
 
 
-
+    </android.support.constraint.ConstraintLayout>
 
 
     <android.support.v7.widget.RecyclerView
-
-
-
-        android:layout_below="@id/searchBar"
         android:id="@+id/recycler_food"
-        android:scrollbars="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/barr"
+        android:layout_marginTop="0dp"
+        android:scrollbars="vertical" />
 
 
     <com.andremion.counterfab.CounterFab

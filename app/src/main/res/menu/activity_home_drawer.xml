@@ -6,33 +6,40 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_menu"
-            android:icon="@drawable/ic_maca"
-            android:iconTint="@android:color/white"
-            android:title="MENÜ" />
+            android:icon="@drawable/ic_menu_48px"
+            android:iconTint="#45363B"
+            android:title="MENU"
+            android:fontFamily="@font/kim"
+            />
+
+        <item android:id="@+id/nav_cart"
+            android:icon="@drawable/shopping_card_white"
+            android:iconTint="#45363B"
+            android:title="SEPETIM" />
 
         <item
-            android:id="@+id/nav_cart"
-            android:icon="@drawable/ic_shopping_cart_black_24dp"
-            android:iconTint="@android:color/white"
-            android:title="Sepet" />
+            android:id="@+id/nav_fav"
+            android:icon="@drawable/ic_favorite_black_24dp"
+            android:iconTint="#45363B"
+            android:title="FAVORILERIM" />
 
         <item
             android:id="@+id/nav_orders"
-            android:icon="@drawable/ic_access_time_black_24dp"
-            android:iconTint="@android:color/white"
-            android:title="Siparişler" />
+            android:icon="@drawable/ic_alarm_clock_64px"
+            android:iconTint="#45363B"
+            android:title="SIPARISLERIM" />
 
         <item
             android:id="@+id/nav_change_pwd"
-            android:icon="@drawable/ic_security_black_24dp"
-            android:iconTint="@android:color/white"
-            android:title="Parola Güncelle" />
+            android:icon="@drawable/ic_password_64px"
+            android:iconTint="#45363B"
+            android:title="PARALO GUNCELLE" />
 
         <item
             android:id="@+id/nav_log_out"
-            android:icon="@drawable/ic_exit_to_app_black_24dp"
-            android:iconTint="@android:color/white"
-            android:title="Çıkış" />
+            android:icon="@drawable/ic_logout_rounded_up_50px"
+            android:iconTint="#45363B"
+            android:title="CIKIS YAP" />
 
     </group>
 

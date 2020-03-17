@@ -1,52 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
-    android:padding="16dp"
-    android:background="@drawable/turuncu"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context=".Cart">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listCart"
-        android:background="@android:color/transparent"
-
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
     <android.support.v7.widget.CardView
-        android:layout_alignParentBottom="true"
-        app:cardBackgroundColor="@color/colorPrimary"
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        app:cardBackgroundColor="#fff"
+        android:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_margin="8dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="105dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="Toplam:"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/white"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/kim"
+                    android:text="Toplam:"
+                    android:textColor="#2e2e2e"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/total"
-                    android:text="$10,000"
-                    android:textSize="24sp"
-                    android:textColor="@android:color/white"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:fontFamily="@font/kim"
+                    android:text="$10,000"
+                    android:textColor="#2e2e2e"
+                    android:textSize="24sp" />
 
             </LinearLayout>
 
@@ -54,19 +73,24 @@
                 android:id="@+id/btnPlaceOrder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="45dp"
                 android:layout_marginLeft="45dp"
-                android:layout_marginTop="45dp"
-                android:layout_marginEnd="45dp"
-                android:layout_marginRight="45dp"
-                android:layout_marginBottom="5dp"
-                android:background="@color/overlayBackground"
-                android:text="Sipariş adresi"
-                android:textColor="@android:color/white"
+                android:layout_marginTop="47dp"
+                android:layout_marginEnd="44dp"
+                android:layout_marginRight="44dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/appYesil"
+                android:fontFamily="@font/kim"
+
+                android:text="Sipariş Ver"
+                android:textColor="#fff"
                 android:textColorHint="@android:color/white"
-
-
+                android:textSize="16sp"
                 app:met_baseColor="@android:color/white"
                 app:met_floatingLabel="highlight"
                 app:met_maxCharacters="11"
@@ -76,4 +100,49 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-</RelativeLayout>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:elevation="2dp"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/geriCart"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:tint="#2e2e2e"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_backk" />
+
+        <TextView
+            android:id="@+id/sepetim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/kim"
+            android:text="SEPETIM"
+            android:textColor="#2e2e2e"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
